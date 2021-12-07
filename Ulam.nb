@@ -1,63 +1,37 @@
 The defining function of the 3n+1 algorithm
 
-In[35]:= (*the function ulam computes one step of the 3k+1 algorithm to a number n*)
+(*the function ulam computes one step of the 3k+1 algorithm to a number n*)
 ulam[n_] := If[Mod[n, 2] == 0 , n/2, 3 n + 1]
 
 
 (*the function f allows us to define n as a number not a variable*)
 f[n_] := n
-(*the function ulamlist generates a rough list of the ulam procedure to 1*)
 
-In[116]:= (*ulamlist[n_]:=Module[{y},y=f[n];While[y>1,
-Print[y];y=ulam[y]]]*)
+
 (*the function ulamslist returns a string/list of the numbers in the ulams \
 procedure*)
 ulamslist[n_] := Catch[Module[{y, g}, y := f[n]; g := {}; While[y > 0,
     AppendTo[g, y]; If[y == 1, Throw[g]]; y = ulam[y]]]]
+
 (*ulamnumber as defined here, is the number of steps needed in the 3k+1 \
 algorithm to reach 1 plus 1, since the initial number n is included in the \
 list*)
 ulamnumber[n_] := Length[ulamslist[n]]
+
+(*ulamslistmod8 reduces each element in ulamslist modulo 8*)
 ulamslistmod8[n_] := Module[{},
    lst = ulamslist[n];
    index = ulamnumber[n];
    For[i = 1, i < index + 1, i = i + 1,
     valu = Part[lst, i]; Part[lst, i] = Mod[valu, 8]];(*Use Part, as here, 
    to reassign values!*)
-   Return[lst];];(*While[ k<index+1,valu= \
-Part[lst,k];ReplacePart[lst,k\[Rule]Mod[valu,8]]];
-Return[lst];]*)(*valu= Extract[lst,i]*)(*valu= \
-Part[lst,i],nu=Mod[Valu,8],ReplacePart[i\[Rule]nu][lst]*)
-ulamslistmod8[5]
-ulamslist[5]
-ulamslistmod8[7]
-ulamslist[7]
-ulamnumber[4]
-ulamnumber[10]
-ulamslist[10]
+   Return[lst];];
 
-
-Out[118]= {5, 0, 0, 4, 2, 1}
-
-Out[119]= {5, 16, 8, 4, 2, 1}
-
-Out[120]= {7, 6, 3, 2, 1, 4, 2, 5, 0, 4, 2, 5, 0, 0, 4, 2, 1}
-
-Out[121]= {7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1}
-
-Out[122]= 3
-
-Out[123]= 7
-
-Out[124]= {10, 5, 16, 8, 4, 2, 1}
 
 The sum of steps needed when viewed as a path
 
-In[45]:= (*This gives the sum of the steps taken if we view this as a path from (0,1) \
+(*This gives the sum of the steps taken if we view this as a path from (0,1) \
 to (sumofsteps,1)*)
-
-
-In[46]:= 
 ulamsumdifferences[n_] := Module[{},
   lst = ulamslist[n];
   m = ulamnumber[n];
@@ -67,179 +41,30 @@ ulamsumdifferences[n_] := Module[{},
   Return[sum];]
 
 
-In[47]:= ulamsumdifferences[5]
-
-Out[47]= 30
-
-In[48]:= 
-ulamsumdifferences[3]
-
-Out[48]= 40
-
-In[49]:= 
-ulamsumdifferences[7]
-
-Out[49]= 234
-
-In[50]:= ulamsumdifferences[9]
-
-Out[50]= 276
-
-In[51]:= 
-
-
-In[52]:= 
-
 Alternative method for generating the ulam sequence in the mod 8 form
 
-In[53]:= 
 realpartcomplexn[n_] := Ceiling[n/8]*Cos[Mod[n, 8]*Pi/4]
+
 (*The imaginary part is written without the I factor, so it is a real number*)
 
 
 imagpartcomplexn[n_] := Ceiling[n/8]*Sin[Mod[n, 8]*Pi/4]
 
-In[55]:= 
-
-realpartcomplexn[ulamslist[3]]
-
-imagpartcomplexn[ulamslist[3]]
-
-Out[55]= {-(1/Sqrt[2]), 0, -(1/Sqrt[2]), 2, 1, -1, 0, 1/Sqrt[2]}
-
-Out[56]= {1/Sqrt[2], 2, -(1/Sqrt[2]), 0, 0, 0, 1, 1/Sqrt[2]}
-
-In[57]:= (*Here we define functions that create the x and y coordinates of the pseudo \
+(*Here we define functions that create the x and y coordinates of the pseudo \
 complex numbers corresponding to the list of numbers in ulamslist for a \
 number n*)
 tablereal[n_] := realpartcomplexn[ulamslist[n]]
 tableimag[n_] := imagpartcomplexn[ulamslist[n]]
 
 
-In[59]:= 
-X := tablereal[10]
-Y := tableimag[10]
-
-In[61]:= 
+(*This function combines the realpart and imagpart detailed above*)
 complexn[n_] := 
  Ceiling[n/8]*Cos[Mod[n, 8]*Pi/4] + Ceiling[n/8]*I*Sin[Mod[n, 8]*Pi/4]
 ListPlot[complexn[ulamslist[8]], AspectRatio -> 1]
 
-Out[62]= \!\(\*
-GraphicsBox[{{}, {{}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-      AbsoluteThickness[1.6], 
-      PointBox[{{1., 1.}, {2., -1.}}]}, {}}, {}, {}, {}, {}},
-AspectRatio->1,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0., 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{0., 2.}, {-1., 1.}},
-PlotRangeClipping->True,
-PlotRangePadding->{{
-Scaled[0.02], 
-Scaled[0.02]}, {
-Scaled[0.05], 
-Scaled[0.05]}},
-Ticks->{Automatic, Automatic}]\)
-
-Examples of ulamslist
-
-In[63]:= 
-ulamslist[3]
-
-Out[63]= {3, 10, 5, 16, 8, 4, 2, 1}
-
-In[64]:= 
-ulamslist[5]
-
-Out[64]= {5, 16, 8, 4, 2, 1}
-
-In[65]:= ulamslist[7]
-
-Out[65]= {7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1}
-
-In[66]:= 
-ulamslist[9]
-
-Out[66]= {9, 28, 14, 7, 22, 11, 34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1}
-
-In[67]:= 
-ulamslist[10]
-
-Out[67]= {10, 5, 16, 8, 4, 2, 1}
-
-In[68]:= data = Transpose@{X, Y};
-ListPlot[data, Joined -> True, AxesLabel -> {"Re", "Im"}, 
- PlotMarkers -> Automatic]
-
-Out[69]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], 
-       LineBox[{{0., 2.}, {-0.7071067811865476, -0.7071067811865476}, {2., 
-        0.}, {1., 0.}, {-1., 0.}, {0., 1.}, {0.7071067811865476, 
-        0.7071067811865476}}]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], {{{0., 
-        2.}}, {{-0.7071067811865476, -0.7071067811865476}}, {{2., 0.}}, {{1., 
-        0.}}, {{-1., 0.}}, {{0., 1.}}, {{0.7071067811865476, 
-        0.7071067811865476}}}]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{
-FormBox["\"Re\"", TraditionalForm], 
-FormBox["\"Im\"", TraditionalForm]},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-1., 2.}, {-0.7071067811865476, 2.}},
-PlotRangeClipping->True,
-PlotRangePadding->{{
-Scaled[0.02], 
-Scaled[0.02]}, {
-Scaled[0.05], 
-Scaled[0.05]}},
-Ticks->{Automatic, Automatic}]\)
-
 The code giving the graphic form of ulams list in mod 8 format, ulamgraph.
 
-In[70]:= datlist[n_] := Transpose@{tablereal[n], tableimag[n]}
+datlist[n_] := Transpose@{tablereal[n], tableimag[n]}
 ulamgraph[n_] := 
  ListPlot[datlist[n], Joined -> True,(*AxesLabel\[Rule]{"Re","Im"},*)
   PlotMarkers -> Automatic, 
@@ -248,619 +73,29 @@ ulamgraph[n_] :=
 
 Examples of ulamgraph and ulamslist
 
-In[72]:= 
 ulamgraph[10]
 
-Out[72]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], 
-       LineBox[{{0., 2.}, {-0.7071067811865476, -0.7071067811865475}}], 
-       LineBox[{{-0.7071067811865471, -0.7071067811865475}, {2., 0.}, {1., 
-        0.}, {-1., 0.}, {0., 1.}, {0.7071067811865476, 
-        0.7071067811865476}}]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], {{{0., 2.}}, {{2., 0.}}, {{1., 0.}}, {{-1., 
-        0.}}, {{0., 1.}}, {{0.7071067811865476, 
-        0.7071067811865476}}, {{-0.7071067811865476, -0.7071067811865475}}, \
-{{-0.7071067811865471, -0.7071067811865475}}}]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-1, 2}, {-0.7071067811865475, 2}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-In[73]:= 
 ulamgraph[20]
 
-Out[73]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], 
-       LineBox[{{-3., 0.}, {0., 
-        2.}, {-0.7071067811865476, -0.7071067811865475}}], 
-       LineBox[{{-0.7071067811865471, -0.7071067811865475}, {2., 0.}, {1., 
-        0.}, {-1., 0.}, {0., 1.}, {0.7071067811865476, 
-        0.7071067811865476}}]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], {{{-3., 0.}}, {{0., 2.}}, {{2., 0.}}, {{1., 
-        0.}}, {{-1., 0.}}, {{0., 1.}}, {{0.7071067811865476, 
-        0.7071067811865476}}, {{-0.7071067811865476, -0.7071067811865475}}, \
-{{-0.7071067811865471, -0.7071067811865475}}}]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-3, 2}, {-0.7071067811865475, 2}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-In[74]:= 
+ulamslistmod8[27]
 ulamslist[27]
+ulamgraph[27]
 
-Out[74]= {27, 82, 41, 124, 62, 31, 94, 47, 142, 71, 214, 107, 322, 161, 484, 242, 121, \
-364, 182, 91, 274, 137, 412, 206, 103, 310, 155, 466, 233, 700, 350, 175, \
-526, 263, 790, 395, 1186, 593, 1780, 890, 445, 1336, 668, 334, 167, 502, 251, \
-754, 377, 1132, 566, 283, 850, 425, 1276, 638, 319, 958, 479, 1438, 719, \
-2158, 1079, 3238, 1619, 4858, 2429, 7288, 3644, 1822, 911, 2734, 1367, 4102, \
-2051, 6154, 3077, 9232, 4616, 2308, 1154, 577, 1732, 866, 433, 1300, 650, \
-325, 976, 488, 244, 122, 61, 184, 92, 46, 23, 70, 35, 106, 53, 160, 80, 40, \
-20, 10, 5, 16, 8, 4, 2, 1}
-
-In[125]:= ulamslistmod8[27]
-
-Out[125]= {3, 2, 1, 4, 6, 7, 6, 7, 6, 7, 6, 3, 2, 1, 4, 2, 1, 4, 6, 3, 2, 1, 4, 6, 7, \
-6, 3, 2, 1, 4, 6, 7, 6, 7, 6, 3, 2, 1, 4, 2, 5, 0, 4, 6, 7, 6, 3, 2, 1, 4, 6, \
-3, 2, 1, 4, 6, 7, 6, 7, 6, 7, 6, 7, 6, 3, 2, 5, 0, 4, 6, 7, 6, 7, 6, 3, 2, 5, \
-0, 0, 4, 2, 1, 4, 2, 1, 4, 2, 5, 0, 0, 4, 2, 5, 0, 4, 6, 7, 6, 3, 2, 5, 0, 0, \
-0, 4, 2, 5, 0, 0, 4, 2, 1}
-
-In[75]:= ulamgraph[27]
-
-Out[75]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.009166666666666668], 
-       AbsoluteThickness[1.6], LineBox[CompressedData["
-1:eJx1lF1IVFEQxw8pcYmCxbVWxei2hhkYWbkuq8Id23b9gFzNtS2rRZdtgxQy
-yT5Q6NIXET1VBFHIQtBLRqAPBgXOU0FsSI8+ZEIlBBVWL/VQVJ45B87hngPL
-jzMzZ+Y/zOzdnDm5/9gqxtjwv99/vm66kJvIr0YiMOVUw/zQu8KZnz5Jbq9D
-5nlsmUfkVf01qOXT/LswXpXYPXW6HIiavwl7kk/uXi9UCap63b0w/ufq0tzU
-dklu7zTodUhntSS3txriw6TfFtTqt5DubZLc0WHI14h3+lun3UwQiGqcG0Vc
-s4m9aKsV1OrtA19bwL3dEJLkjgOGenGMfP9amK/cAUStXhc+Ck0fetAbBqLq
-x4P4NOfHscctgqqefAZKKzbmI5c7JFfsi4MGPUeAzzGKgjw+q+ZlvYb3MdTm
-rfWToH1sEFTzYor2ECS5fcC7HnbTfkYEtXx9MNo39vBKICrJHVmD/iTNtRmI
-Wlwa+VxjNN+Y1l8Oyz4HceFNAoiqf3EYS3ZW+I6/TQFR9Xedx8EP8XtHvw0I
-qv2wS1AUmCl/vnACBVfM526oce64d3/uEO7pbvev25oEohrXP4rvf325f6sx
-DUTVb7loPftY7MzkBNW6vmtwdrKk8mXRKRTk726qcdZF7d2It147AyH702T9
-XLsktxv2Fw5DNrXetkaikrwvw7zdJEwU9/x49bsZBbk9repzO9U7c7zzsTr6
-bm1AQW4Pa+9rDO/L6DvGaP+ZFhek/VwrqOWtpf+vHwW5vV6L26LdS7W7ZdDH
-qL+lWUFhV8OWHe0+yzzPskN5JP8C106Dnw==
-"]]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], CompressedData["
-1:eJx1lF9Ik1EUwG9NYkTBcNZUjNYMMzCyco6p8B1bm38gpzlbWQ0da0EKmWR/
-UOijf0T0VBFEIYOgl4xAHxQKPE8KsZAefciESggqrF7qoWh4z71wL9+9cPlx
-z//DOd+3I33uyGkXY2yocNcV7vrCfdt4NTue24BEYMqpgsXBD/mLvz2SXF6L
-zPH4ZRwRV9VXoxZP0+/HWGX8wOSFMiBq+kbsTrx8dCdfKajWax+CsX+3VhYm
-90hyeYehXovqrJLk8haDfYjq9wtq+Zup7t2SXNFuiNeAD/tapux0AIiqnR1B
-3LidzbXWCGr5DoOn1Wc/qA9KcsVRQ74Yhn9+zy9W7AWilq8Tnwenjj/tCQFR
-1eMxnMl6cfRFs6BaTy4NJeXbcuEb7ZJr8uUBQz0ngc8xgoLcPqPGZT0G/yhq
-89b6idM+1guqcTFJewiSXN7vnA+7aD/Dglq8XhjpHX120xeR5IqMof4EzbUJ
-iJpdCvlcozTfqNZfFku/BnDpXRyIqn55CIv3lXvOvE8CUdV3XsGBT7HHp370
-C6r9sOvg8k2XvV46i4Jr4st3VTt7zLk/exAPdrV5N+9KAFG16xvBj3++Pbnf
-kAKiqnfb6H71uciazgqqeT234dJEccW86zwKcr97qp37muY37FyvPw1B/5eJ
-uoU2SS437C+cgExyi989HJHkfRnmbSdgvKj715u/TSjI5Sm1PrtDfTPLOR6r
-pf/WVhTk8pDmX23wL6X/GKP9Z5pdgPZzk6AWt4a+Xy8KcnmdZrdTe5dob7eh
-Pkb9rcwKCrlqtmpp71nmeFYtiiP5H+3Wg6E=
-"]]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-456, 1154}, {-513, 770}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-In[76]:= 
 ulamgraph[10000]
 
-Out[76]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], 
-       LineBox[{{1250., 0.}, {625., 0.}, {-313., 0.}, {0., 157.}, {
-        55.86143571373726, 55.86143571373726}, {-235., 0.}, {0., 
-        118.}, {-41.71930009000631, -41.7193000900063}}], 
-       LineBox[CompressedData["
-1:eJxTTMoPSmViYGAQB2IQLeNdyyZ0x+WAApRmAIM0BwYUEIbGd0Pjm6Hx1dD4
-EgcYsAKOA2et69PmLfi2H0rbo8qLONzMuX+m7AcDnIaIy+AwT8ABzbz9MHPQ
-7cWunwGq/9l+GA0TR1X2Ac2dH/YzYAUf7KHmwGkAB8xBZA==
-"]]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], CompressedData["
-1:eJxTTMoPSmVmYGCQB2JGIGZigIKOyQ4MyKCjGZU/ofgAAzawINnhIm9rm/M7
-bzgNFk/Ixa6+IRZqbhqq+QxhaHw3NL4ZGl8NjS+B3T4GjgNnrevT5i34th9K
-26PKizjczLl/puwHA5yGiMvgME/AAc28/TBz0O3Frp8Bqv/ZfhgNE0dV9gHN
-nR/2M2AFH+yh5sBpRe9aNqE7LgcUoLQMGh8AcelWzw==
-"]]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-313, 1250}, {-41.7193000900063, 157}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-In[77]:= 
 ulamgraph[30]
 
-Out[77]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], LineBox[CompressedData["
-1:eJxTTMoPSmViYGAQBmIQjQoEDpy1rk+bt+CbPZTejyovceBmzv0zZT8YHKD0
-AVR5pQMHuOQZjnnwwGgHVHkdh+CQ9TO7zggfgNEQcRM0dSpofBE0PgeavXDg
-AHH3s/0wGiaOquyDPRofzZ8IdVBz4DQAP1c9qg==
-"]]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], CompressedData["
-1:eJxTTMoPSmVmYGAQBmJGIGZiQAcCB85a16fNW/DNHkrvR5WXOHAz5/6Zsh8M
-DlD6AKq80oEDXPIMxzx4YLQDqryOQ3DI+pldZ4QPwGiIuAmaOhU0vgganwPN
-XjhwgLj72X4YDRNHVfbBHo2P5k+EOqg5cBoASMs9rA==
-"]]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-4.949747468305832, 20}, {-9, 14}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-In[78]:= 
 ulamgraph[100]
 
-Out[78]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], LineBox[CompressedData["
-1:eJxTTMoPSmViYGCQAmIQDQFaBxiwAhmHs9b1afMWsMFpiLgKDvUiB27m3D9T
-9oMBRjugyivAzDkAoyHiamjqJHCYzwHV920/lLZHs98BZi+q/TI4zBNwQDNv
-P8wcdHux62eA6n+2H0bDxFGVfUBz54f9DFjBB3uoOXAaABzkVVE=
-"]]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], CompressedData["
-1:eJxTTMoPSmVmYGCQAmJGIGZigAGtAwxYgYzDWev6tHkL2OA0RFwFh3qRAzdz
-7p8p+8EAox1Q5RVg5hyA0RBxNTR1EjjM54Dq+7YfStuj2e8AsxfVfhkc5gk4
-oJm3H2YOur3Y9TNA9T/bD6Nh4qjKPqC588N+Bqzggz3UHDgNACdUVVM=
-"]]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-13, 11}, {-5, 8}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
+ulamgraph[1000]
 
-In[79]:= 
+ulamslist[1000]
 
-
-
-In[80]:= 
-
-In[81]:= ulamgraph[1000]
-
-Out[81]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.009166666666666668], 
-       AbsoluteThickness[1.6], LineBox[CompressedData["
-1:eJx1lF9I01EUxy/pw48oGM6aitGaUQZG/5xrKvyOrW0q5DRnK6ulYy1IIZPs
-Dwr96B8RPVUEUcgg6CUj0AeDAs9TQSykRx8yoRKCCquXeiiq3XMv3cvvXhgf
-7jnf849z91uXObH36DLG2NDf3z8WDxwB9v9xEshcD8CrpvO58fwGFOT6uBrP
-dhria3Fu8G3h9A8PEDXddozVJHZMnqoEouZvwu7k4zvXCjWCWt+7Yez3lcXZ
-yc2S3N5h6McW80hye9ygD1H/fkGtfgv1vUmSO9oN+Rrxdl98yskEgKjqnAji
-8rXseWudoFZvD3hafc6thqAkd+wz1Ith+NuXwlz1FiBq9TrxYXDqwP2eEBBV
-P+7HJzkvjj5qEVT7yWegvGpNPnypXbJoXxgw9HMI+B4jKMj1WTUv6zHER1Hb
-tzZPgt5pg6CaF1P0DkGS2/vd62EXvc+woJavF0Z6Rx9c9kUkuSNr6D9Je20G
-oqZLI99rlPYb1ebLYcWnAM6/TgBR9S8MYdm2Ks+xNykgqv7OczjwPnb38Nd+
-QXUedhFKfNOVz+aPo2DRfPa6qnPG3OdzBnFXV5t35cYkEFVd3wi++/n53s3G
-NBBVv+Wg9fRDqT2dE1Treq7CmYmy6hclJ1GQx91QddYFLW7YvV9/BoL+jxP1
-s22S3G54v3AQsqlVfms4IsnnMuzbScJ4aff3l7+aUZDb02p/Tod6Z7Z7PraV
-vlurUZDbQ1p8rSG+gr5jjN4/03QBep8rBLW8dfT/9aIgt9druvXavVy7W4b+
-GM23OCMo7KpsydbuM8z1LNmUR/IP65F2WA==
-"]]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], CompressedData["
-1:eJx1lF9I01EUx2/NhxEFw1lTMVozykDpn3NNhd+xtU2FnOZsZbV0rAUpZJL9
-QaEf/SOip4ogChkEvWQE+qBQ4HlKiIX06EMmVEJQYfVSD0XiPffSvfzuhfHh
-nvM9/zh3v82ZMwdPuhhjA8u/Vcu/1YwOnAD2/7ETyBwPwJuGy7nR/FYU5Pq4
-Gs/2GuKrcK7/feH8Lw8QNd1ujFUm9oyfKwOi5m/AzuTzB7cKlYJa3/th5O+N
-xdnxGklubzP0Y4l5JLk9btCHqH+/oFa/ifreLskdrYZ89Xi/Jz5hZwJAVHV2
-BHHNJvaquVpQq3cAPM0++15dUJI7DhnqxTD841thrmIHELV67fg0OHHkcVcI
-iKofD+NUzovDz5oE1X7yGSgp35gPX2uVXLEv9Bn6OQZ8jxEU5Pqsmpd1GeKj
-qO1bmydB77ROUM2LKXqHIMntvc71sIPeZ1hQy9cNQ93DT677IpLckTX0n6S9
-NgJR06WR7zVK+41q8+Ww9EsA598mgKj6FwaweFe559S7FBBVf/sl7PsYe3j8
-e6+gOg+7Ci7fZNnL+dMouGK+eFvV2SPO89n9uK+jxbtuWxKIqq5nCD/8/vro
-bn0aiKrfbaP7xaciazInqNb13IQLY8UVM66zKMjj7qg69xUtbtC5X38Ggv7P
-Y7WzLZLcbni/cBSyqfV+92BEks9l2LedhNGizp+v/zSiILen1f7sNvXOLOd8
-bCd9tzagILeHtPgqQ3wpfccYvX+m6QL0PtcKanmr6f/rRUFur9V0W7R7iXZ3
-G/pjNN/itKCwq7IlS7tPM8ezZFEeyX8CKHZa
-"]]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-456, 1154}, {-513, 770}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-In[82]:= ulamslist[1000]
-
-Out[82]= {1000, 500, 250, 125, 376, 188, 94, 47, 142, 71, 214, 107, 322, 161, 484, \
-242, 121, 364, 182, 91, 274, 137, 412, 206, 103, 310, 155, 466, 233, 700, \
-350, 175, 526, 263, 790, 395, 1186, 593, 1780, 890, 445, 1336, 668, 334, 167, \
-502, 251, 754, 377, 1132, 566, 283, 850, 425, 1276, 638, 319, 958, 479, 1438, \
-719, 2158, 1079, 3238, 1619, 4858, 2429, 7288, 3644, 1822, 911, 2734, 1367, \
-4102, 2051, 6154, 3077, 9232, 4616, 2308, 1154, 577, 1732, 866, 433, 1300, \
-650, 325, 976, 488, 244, 122, 61, 184, 92, 46, 23, 70, 35, 106, 53, 160, 80, \
-40, 20, 10, 5, 16, 8, 4, 2, 1}
-
-In[83]:= 
 ulamslist[27]
 
-Out[83]= {27, 82, 41, 124, 62, 31, 94, 47, 142, 71, 214, 107, 322, 161, 484, 242, 121, \
-364, 182, 91, 274, 137, 412, 206, 103, 310, 155, 466, 233, 700, 350, 175, \
-526, 263, 790, 395, 1186, 593, 1780, 890, 445, 1336, 668, 334, 167, 502, 251, \
-754, 377, 1132, 566, 283, 850, 425, 1276, 638, 319, 958, 479, 1438, 719, \
-2158, 1079, 3238, 1619, 4858, 2429, 7288, 3644, 1822, 911, 2734, 1367, 4102, \
-2051, 6154, 3077, 9232, 4616, 2308, 1154, 577, 1732, 866, 433, 1300, 650, \
-325, 976, 488, 244, 122, 61, 184, 92, 46, 23, 70, 35, 106, 53, 160, 80, 40, \
-20, 10, 5, 16, 8, 4, 2, 1}
-
-In[84]:= ulamslist[300]
+ulamslist[300]
 ulamgraph[300]
 
-Out[84]= {300, 150, 75, 226, 113, 340, 170, 85, 256, 128, 64, 32, 16, 8, 4, 2, 1}
-
-Out[85]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], 
-       LineBox[{{-38., 0.}, {0., -19.}, {-7.0710678118654755`, 
-        7.0710678118654755`}, {0., 29.}, {10.606601717798213`, 
-        10.606601717798213`}, {-43., 0.}, {0., 
-        22.}, {-7.7781745930520225`, -7.7781745930520225`}, {32., 0.}, {16., 
-        0.}, {8., 0.}, {4., 0.}, {2., 0.}, {1., 0.}, {-1., 0.}, {0., 1.}, {
-        0.7071067811865476, 0.7071067811865476}}]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], {{{-38., 0.}}, {{
-        0., -19.}}, {{-7.0710678118654755`, 7.0710678118654755`}}, {{0., 
-        29.}}, {{10.606601717798213`, 10.606601717798213`}}, {{-43., 0.}}, {{
-        0., 22.}}, {{-7.7781745930520225`, -7.7781745930520225`}}, {{32., 
-        0.}}, {{16., 0.}}, {{8., 0.}}, {{4., 0.}}, {{2., 0.}}, {{1., 
-        0.}}, {{-1., 0.}}, {{0., 1.}}, {{0.7071067811865476, 
-        0.7071067811865476}}}]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-43, 32}, {-19, 29}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-In[86]:= ulamgraph[200]
+ulamgraph[200]
 ulamslist[200]
 ulamgraph[27]
-ulamslist[27]
-
-Out[86]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.012833333333333334`], 
-       AbsoluteThickness[1.6], LineBox[CompressedData["
-1:eJxTTMoPSmViYGCQBmIQDQGWDgwoQOsAA1Yg43DWuj5t3gI2OA0RV8GhXuTA
-zZz7Z8p+MMBoNHsUYOYcgNEQcTU0dRI4zOeA6vu2H0rbo9nvALMX1X4ZHOYJ
-OKCZtx9mDrq92PUzQPU/2w+jYeKoyj6gufPDfgas4IM91Bw4DQAERVXL
-"]]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], CompressedData["
-1:eJxTTMoPSmVmYGCQBmJGIGZigAFLBwYUoHWAASuQcThrXZ82bwEbnIaIq+BQ
-L3LgZs79M2U/GGA0mj0KMHMOwGiIuBqaOgkc5nNA9X3bD6Xt0ex3gNmLar8M
-DvMEHNDM2w8zB91e7PoZoPqf7YfRMHFUZR/Q3PlhPwNW8MEeag6cBgAO2VXN
-
-"]]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-13, 25}, {-5, 8}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-Out[87]= {200, 100, 50, 25, 76, 38, 19, 58, 29, 88, 44, 22, 11, 34, 17, 52, 26, 13, \
-40, 20, 10, 5, 16, 8, 4, 2, 1}
-
-Out[88]= \!\(\*
-GraphicsBox[{{}, {{{}, {}, 
-{RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.009166666666666668], 
-       AbsoluteThickness[1.6], LineBox[CompressedData["
-1:eJx1lF1IVFEQxw8pcYmCxbVWxei2hhkYWbkuq8Id23b9gFzNtS2rRZdtgxQy
-yT5Q6NIXET1VBFHIQtBLRqAPBgXOU0FsSI8+ZEIlBBVWL/VQVJ45B87hngPL
-jzMzZ+Y/zOzdnDm5/9gqxtjwv99/vm66kJvIr0YiMOVUw/zQu8KZnz5Jbq9D
-5nlsmUfkVf01qOXT/LswXpXYPXW6HIiavwl7kk/uXi9UCap63b0w/ufq0tzU
-dklu7zTodUhntSS3txriw6TfFtTqt5DubZLc0WHI14h3+lun3UwQiGqcG0Vc
-s4m9aKsV1OrtA19bwL3dEJLkjgOGenGMfP9amK/cAUStXhc+Ck0fetAbBqLq
-x4P4NOfHscctgqqefAZKKzbmI5c7JFfsi4MGPUeAzzGKgjw+q+ZlvYb3MdTm
-rfWToH1sEFTzYor2ECS5fcC7HnbTfkYEtXx9MNo39vBKICrJHVmD/iTNtRmI
-Wlwa+VxjNN+Y1l8Oyz4HceFNAoiqf3EYS3ZW+I6/TQFR9Xedx8EP8XtHvw0I
-qv2wS1AUmCl/vnACBVfM526oce64d3/uEO7pbvev25oEohrXP4rvf325f6sx
-DUTVb7loPftY7MzkBNW6vmtwdrKk8mXRKRTk726qcdZF7d2It147AyH702T9
-XLsktxv2Fw5DNrXetkaikrwvw7zdJEwU9/x49bsZBbk9repzO9U7c7zzsTr6
-bm1AQW4Pa+9rDO/L6DvGaP+ZFhek/VwrqOWtpf+vHwW5vV6L26LdS7W7ZdDH
-qL+lWUFhV8OWHe0+yzzPskN5JP8C106Dnw==
-"]]}}, {
-{RGBColor[0.368417, 0.506779, 0.709798], AbsolutePointSize[6], 
-       AbsoluteThickness[1.6], GeometricTransformationBox[InsetBox[
-StyleBox["\<\"\[FilledCircle]\"\>",
-StripOnInput->False,
-FontSize->8.96], {0., 0.}], CompressedData["
-1:eJx1lF9Ik1EUwG9NYkTBcNZUjNYMMzCyco6p8B1bm38gpzlbWQ0da0EKmWR/
-UOijf0T0VBFEIYOgl4xAHxQKPE8KsZAefciESggqrF7qoWh4z71wL9+9cPlx
-z//DOd+3I33uyGkXY2yocNcV7vrCfdt4NTue24BEYMqpgsXBD/mLvz2SXF6L
-zPH4ZRwRV9VXoxZP0+/HWGX8wOSFMiBq+kbsTrx8dCdfKajWax+CsX+3VhYm
-90hyeYehXovqrJLk8haDfYjq9wtq+Zup7t2SXNFuiNeAD/tapux0AIiqnR1B
-3LidzbXWCGr5DoOn1Wc/qA9KcsVRQ74Yhn9+zy9W7AWilq8Tnwenjj/tCQFR
-1eMxnMl6cfRFs6BaTy4NJeXbcuEb7ZJr8uUBQz0ngc8xgoLcPqPGZT0G/yhq
-89b6idM+1guqcTFJewiSXN7vnA+7aD/Dglq8XhjpHX120xeR5IqMof4EzbUJ
-iJpdCvlcozTfqNZfFku/BnDpXRyIqn55CIv3lXvOvE8CUdV3XsGBT7HHp370
-C6r9sOvg8k2XvV46i4Jr4st3VTt7zLk/exAPdrV5N+9KAFG16xvBj3++Pbnf
-kAKiqnfb6H71uciazgqqeT234dJEccW86zwKcr97qp37muY37FyvPw1B/5eJ
-uoU2SS437C+cgExyi989HJHkfRnmbSdgvKj715u/TSjI5Sm1PrtDfTPLOR6r
-pf/WVhTk8pDmX23wL6X/GKP9Z5pdgPZzk6AWt4a+Xy8KcnmdZrdTe5dob7eh
-Pkb9rcwKCrlqtmpp71nmeFYtiiP5H+3Wg6E=
-"]]}, {}}}, {}, {}, {}, {}},
-AspectRatio->0.6180339887498948,
-Axes->{True, True},
-AxesLabel->{None, None},
-AxesOrigin->{0, 0},
-DisplayFunction->Identity,
-Frame->{{False, False}, {False, False}},
-FrameLabel->{{None, None}, {None, None}},
-FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
-GridLines->{None, None},
-GridLinesStyle->Directive[
-GrayLevel[0.5, 0.4]],
-ImagePadding->All,
-Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& ), "CopiedValueFunction" -> ({
-(Identity[#]& )[
-Part[#, 1]], 
-(Identity[#]& )[
-Part[#, 2]]}& )}},
-PlotRange->{{-456, 1154}, {-513, 770}},
-PlotRangeClipping->False,
-PlotRangePadding->{{0, 0}, {0, 0}},
-Ticks->{Automatic, Automatic}]\)
-
-Out[89]= {27, 82, 41, 124, 62, 31, 94, 47, 142, 71, 214, 107, 322, 161, 484, 242, 121, \
-364, 182, 91, 274, 137, 412, 206, 103, 310, 155, 466, 233, 700, 350, 175, \
-526, 263, 790, 395, 1186, 593, 1780, 890, 445, 1336, 668, 334, 167, 502, 251, \
-754, 377, 1132, 566, 283, 850, 425, 1276, 638, 319, 958, 479, 1438, 719, \
-2158, 1079, 3238, 1619, 4858, 2429, 7288, 3644, 1822, 911, 2734, 1367, 4102, \
-2051, 6154, 3077, 9232, 4616, 2308, 1154, 577, 1732, 866, 433, 1300, 650, \
-325, 976, 488, 244, 122, 61, 184, 92, 46, 23, 70, 35, 106, 53, 160, 80, 40, \
-20, 10, 5, 16, 8, 4, 2, 1}
-
-Alternative graphs and data export attempts
-
-In[90]:= 
-treeplt := 
- TreePlot[{3 -> 10, 6 -> 3, 12 -> 6, 10 -> 5, 20 -> 10, 5 -> 16, 16 -> 8, 
-   8 -> 4, 4 -> 2, 2 -> 1, 20 -> 40, 13 -> 40}, VertexLabeling -> True]
-
-In[91]:= 
-Export["treeplt.jpg", treeplt]
-
-Out[91]= "treeplt.jpg"
-
-In[92]:= 
-Export[LocalObject["treeplt"], treeplt, "pdf"]
-
-Out[92]= LocalObject["file:///C:/Users/Tyler/AppData/Roaming/Wolfram/Objects/treeplt"]
-
-In[93]:= 
-Export[LocalObject["plot"], Plot[Sin[x], {x, 0, 10}], "PNG"]
-
-Out[93]= LocalObject["file:///C:/Users/Tyler/AppData/Roaming/Wolfram/Objects/plot"]
