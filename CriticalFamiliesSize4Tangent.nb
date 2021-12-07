@@ -1,1095 +1,1920 @@
-Critical F4 Disjoint 3 disks in a slab
+CriticalFamiliesSize4Tangent (Avoiding 3 disks in a slab)
 
-In[650]:= (*Originally from: Familyof5CirclesDisjointCorollary *)
+Tangent Critical F4, case (i), Subscript[\[ScriptL], def13L] supports C4 on RHS, Subscript[\[ScriptL], sep23] supports C4 on left (from above)
 
-\[Delta] = 
-  2; (*magnitude of x-coordinate of x-coordinate of center of disk \
-Subscript[C, 1] and Subscript[C, 2]*)
+In[170]:= 
+(*taken from: CriticalFamiliesSize4Overlapping *)(*Compare with Case A(i)*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of center of disk Subscript[C, 1] and \
+Subscript[C, 2]*)
 r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
-\[CurlyEpsilon] = r/5;
+\[CurlyEpsilon] = \[Delta]/5;
+k = (2 r)/(
+  3 \[Delta] + \[Gamma] + 
+   Sqrt[4 r^2 + \[Gamma]^2 + 
+     2 \[Delta]*\[Gamma] + \[Delta]^2]);(*slope of line lsep for C2/C3*)
+t = (2/3) r + \[Delta]; (*t must be in the bound \[Delta]+2r < t < 3\[Delta] \
+*)(*center x-coordinate for C3*)
 \[Gamma] = 
-  4.59;(*\[Gamma] must be in the bound \[Delta]+2r < \[Gamma] < 3\[Delta]; \
-with \[Delta]=2, we have 4 < \[Gamma]<6;this is likely a rough bound *)
+ N[r/3 (9 - 
+     4*Sqrt[3])](*\[Gamma] is x-coordinate of center of disk Subscript[C, \
+3]*)(*We use the absolute value for \[Gamma]*)
 Subscript[x, 
-  4] = (-8 r^2 \[Delta] + \[Gamma]^2 \[Delta] + 2 \[Gamma] \[Delta]^2 + 
-   5 \[Delta]^3 + 
-   4 \[Delta] Sqrt[-r^2 + \[Delta]^2]
-     Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])/(-\[Gamma]^2 - 
-   2 \[Gamma] \[Delta] + 3 \[Delta]^2);
-Subscript[y, 
-  4] = -((4 r \[Delta] (-4 r^2 + (\[Gamma] + \[Delta])^2 + 
-      2 Sqrt[-r^2 + \[Delta]^2] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]))/(
-   Sqrt[-4 r^2 + (\[Gamma] - \[Delta])^2] (\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-      3 \[Delta]^2)));(*this value is from the derivations below*)
-(*\[Alpha]=2Sqrt[\[Delta]^2-r^2]- \[Delta];*)(*This is the magnitude of the \
-x-coordinate of a "region 2" disk*)
-\[ScriptL]sep12slope = r/
-  Sqrt[\[Delta]^2 - r^2];(*Support line Subscript[m, 1] in Soltan*)
-\[ScriptL]sep12int = \[ScriptL]sep12slope*0;
-\[ScriptL]sep13slope = (2 r)/(
-  Sqrt[\[Gamma] + \[Delta] + 2 r] Sqrt[\[Gamma] + \[Delta] - 
-     2 r]); (*This is the slope of Subscript[m, 2] in Soltan*)
-\[ScriptL]sep13int = \[ScriptL]sep13slope*-((\[Gamma] - \[Delta])/2);
-\[ScriptL]sep23slope = (2*r)/(
- Sqrt[Abs[\[Delta] - \[Gamma]] + 2 r] Sqrt[
-   Abs[\[Delta] - \[Gamma]] - 
-    2 r]) (*This is the slope of Subscript[m, 3](x) in Soltan*)
-\[ScriptL]sep23int = -\[ScriptL]sep23slope*((\[Delta] + \[Gamma])/2);
+  4] = -(Sqrt[
+      4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + \[Gamma] + 
+     2 \[Delta]);(*Subscript[x, 4] is x-coordinate of center of disk \
+Subscript[C, 4]*)(*We are not using the absolute value for Subscript[x, 4]*)
 b = r/(2 \[Delta]);(*a small buffer term*)
-(*\[Alpha]again=((Sqrt[3]Sqrt[t+4]Sqrt[t])/(2Sqrt[3]-Sqrt[t+4]Sqrt[t]))*((t-2)\
-/(Sqrt[t+4]Sqrt[t])-(t^2+4t+2)/(t+2)^2-1/(2Sqrt[3])-Sqrt[3]/2);
-\[Beta]again=1/Sqrt[3]*\[Alpha]again-1/(2*Sqrt[3])-Sqrt[3]/2;*)
 ycoordcirclab = -(r/2);
-(*Subscript[A, x]=(Sqrt[\[Delta]+r]Sqrt[\[Delta]-r](t+\[Delta]))/(2Sqrt[\
-\[Delta]+r]Sqrt[\[Delta]-r]-Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r]); \
-(*x-coordinate of intersection point A of lines Subscript[m, 1] and \
-Subscript[m, 3] *)
- Subscript[A, y]=(r(t+\[Delta]))/(2Sqrt[\[Delta]+r]Sqrt[\[Delta]-r]-Sqrt[t-\
-\[Delta]+2r]Sqrt[t-\[Delta]-2r]); (*y-coordinate of intersection point A of \
-lines Subscript[m, 1] and Subscript[m, 3] *)
-Subscript[B, x]=\[Delta]/2*(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]+Sqrt[t-\
-\[Delta]+2r]Sqrt[t-\[Delta]-2r])/(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]-Sqrt[\
-t-\[Delta]+2r]Sqrt[t-\[Delta]-2r])+t/2; (*x-coordinate of intersection point \
-B of lines Subscript[m, 2] and Subscript[m, 3] *)
-Subscript[B, \
-y]=(r*\[Delta])/(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r])*((Sqrt[t+\[Delta]+2r]\
-Sqrt[t+\[Delta]-2r]+Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r])/(Sqrt[t+\[Delta]+\
-2r]Sqrt[t+\[Delta]-2r]-Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r])+1); \
-(*y-coordinate of intersection point B of lines Subscript[m, 2] and \
-Subscript[m, 3] *)*)
-(*\[Theta]=ArcTan[Subscript[s, 3]];(*angle associated with positive slope \
-line m3*)
-\[Phi]=ArcTan[Subscript[s, 2]];(*angle associated with positive slope line m2*)
-\
-
-s=Tan[(\[Theta]+\[Phi])/2];(*slope of line bisection m2 and m3*)*)
-(*\[Theta]=ArcCos[(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]Sqrt[t-\[Delta]+2r]\
-Sqrt[t-\[Delta]-2r]+4r^2)/((t+\[Delta])(t-\[Delta]))];*)(*acute angle between \
-m2 and m3*)
-(*Subscript[o4, x]=Subscript[B, x]+3r;*)(*x-coordinate of center of disk 4*)
-(*Subscript[o4, y]= s(Subscript[o4, x]-Subscript[B, x])+Subscript[B, \
-y];*)(*x-coordinate of center of disk 4*)
-(*h=r*Csc[\[Theta]/2];*)(*distance from point B, where m2 and m3 intersect, \
-to point (alpha,beta), center of disk C4 in region P*)
-
-g1 = Graphics[{(*Green,*)(*Disk Subscript[C, 1]*)
-    Circle[{-\[Delta], 0}, r],(*Magenta,*)(*Disk Subscript[C, 2]*)
-    Circle[{\[Delta], 0}, r],(*Disk Subscript[C, 3]*)
-    Circle[{\[Gamma], 0}, r]}, Axes -> True, Ticks -> None, 
-   AxesLabel -> {x, 
-     y}];(*Three disks within horizontal slab between line Subscript[\
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,
+   y}*)];(*Three disks within horizontal slab between line Subscript[\
 \[ScriptL], 1] and line Subscript[\[ScriptL], 2]*)
-g2 = Graphics[{(*Black,(*horizontal line Subscript[\[ScriptL], 1]*)
-    Line[{{-\[Delta]-r-b,r},{t+r,r}}],
-    Black,(*horizontal line Subscript[\[ScriptL], 2]*)Line[{{-\[Delta]-r-
-    b,-r},{t+r,-r}}],*)Black,(*support line Subscript[m, 1]*)
-    Line[{{-(\[Delta] + r), -(\[Delta] + r)*(
-        r*Sqrt[\[Delta]^2 - r^2])/(\[Delta]^2 - r^2)}, {(\[Gamma] + 
-         5 r), (\[Gamma] + 5 r)*(
-        r*Sqrt[\[Delta]^2 - r^2])/(\[Delta]^2 - 
-         r^2)}}],(*support line Subscript[m, 1]^'*)(*Line[{{-(\[Delta]+r+
-    b),-(\[Delta]+r+b)*(-r*Sqrt[\[Delta]^2-r^2])/(\[Delta]^2-r^2)},{(\[Delta]+
-    r),(\[Delta]+r)*(-r*Sqrt[\[Delta]^2-r^2])/(\[Delta]^2-
-    r^2)}}]*)}];(*support line Subscript[\[ScriptL], 4] contains the point (2\
-\[Delta],0)and is parallel to support line Subscript[\[ScriptL], 3]. Using \
-y-Subscript[y, 1]=m(x-Subscript[x, 1]), we immediately get \
-y-0=y=Sqrt[\[Delta]^2-r^2]/(\[Delta]^2-r^2)(x-2\[Delta]). *)
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{Subscript[x, 4] - r, r}, {t + r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{Subscript[x, 4] - r, -r}, {t + 
+        r, -r}}],(*Black,(*support line Subscript[m, 1], vertical*)
+    Line[{{\[Delta]-r,-3(r)},{\[Delta]-r,3(r)}}],Black,(* 
+    support line Subscript[m, 3], vertical*)Line[{{\[Delta]+
+    r,-(3r)},{\[Delta]+r,(3r)}}]*)}];
 g3 = Graphics[Text[
-    StyleForm[Subscript[C, 1], FontSize -> 11, FontWeight -> "Thin", 
-     FontFamily -> "Courier New"], {-\[Delta] + b, ycoordcirclab}, {1, 0}]];
-g4 = Graphics[Text[
-    StyleForm[Subscript[C, 2], FontSize -> 11, FontWeight -> "Thin", 
-     FontFamily -> "Courier New"], {\[Delta] + b, ycoordcirclab}, {1, 0}]];
-(*g5=Graphics[{(*Blue,*)(*Disk Subscript[C, \
-4]*)Circle[{\[Gamma],2r},r]}];(*Disk Subscript[C, 4] is a "region 1" disk, \
-following the paper based on Soltan's*)*)
-(*g6=Graphics[{Black,Line[{{-\[Gamma],2r},{-Sqrt[\[Delta]^2-r^2],r}}],Black,\
-Line[{{-\[Gamma],\[Delta]},{-1/(\[Delta]-Sqrt[\[Delta]^2-r^2])-Sqrt[\[Delta]^\
-2-r^2],r}}],Black,Line[{{-\[Delta],0},{-Sqrt[\[Delta]^2-r^2],r}}],Black,Line[{\
-{-\[Delta],0},{-\[Delta],r}}]}];*)
-(*g6=Graphics[{(*Blue,*)(*Disk Subscript[C, \
-5]*)Circle[{-\[Alpha],-2r},r]}];(*Disk Subscript[C, 5] is a "region 2" disk, \
-following the paper based on Soltan's*)*)
-(*g7=Graphics[Text[
-StyleForm[Subscript[C, 3],FontSize ->11,FontWeight \
-->"Thin",FontFamily\[Rule]"Courier New"],{t+b,ycoordcirclab},{1,0}]];*)
-(*g8=Graphics[Text[
-StyleForm[Subscript[C, 4],FontSize ->11,FontWeight \
-->"Thin",FontFamily\[Rule]"Courier New"],{\[Gamma]+b,2r},{1,0}]];
-g9=Graphics[Text[
-StyleForm[Subscript[C, 5],FontSize ->11,FontWeight \
-->"Thin",FontFamily\[Rule]"Courier New"],{-\[Alpha]+b,-2r},{1,0}]];*)
-g10 = Graphics[{Black,(* support line Subscript[m, 2]*)
-    Line[{{-\[Delta] - 
-        r, \[ScriptL]sep13slope*(-\[Delta] - 
-           r) + \[ScriptL]sep13int}, {\[Gamma] + 
-        2 r, \[ScriptL]sep13slope*(\[Gamma] + 2 r) + \[ScriptL]sep13int}}] }];
-(*g11=Graphics[{Black,(* support line Subscript[m, \
-2]^'*)Line[{{-\[Delta]-r,-Subscript[s, 2]*(-\[Delta]-r)-Subscript[s, 2]((\
-\[Delta]-t)/2)},{t+r,-Subscript[s, 2]*(t+r)-Subscript[s, \
-2]((\[Delta]-t)/2)}}] }];*)
-g12 = Graphics[{Black,(* support line Subscript[m, 3]*)
-    Line[{{-\[Delta], \[ScriptL]sep23slope*(-\[Delta]) + \[ScriptL]sep23int}, \
-{\[Gamma] + 
-        3 r, \[ScriptL]sep23slope*(\[Gamma] + 3 r) + \[ScriptL]sep23int}}] }];
-(*g13=Graphics[{Black,(* support line Subscript[m, \
-3]^'*)Line[{{\[Delta]-r,-Subscript[s, 3]*(\[Delta]-r)+Subscript[s, 3]((\
-\[Delta]+t)/2)},{t-r+r/(r*\[Delta]),-Subscript[s, \
-3]*(t-r+r/(r*\[Delta]))+Subscript[s, 3]((\[Delta]+t)/2)}}] }];*)
-g14 = Graphics[Text[
-    Style[\[ScriptL], FontSize -> 11, FontWeight -> "Thin", 
-     FontFamily -> "Courier New"], {-\[Delta] - 2 r, r}, {1, 0}]];
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r/2,
+      r/3}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+2r+b/2,-2r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def]*)
+    Line[{{Subscript[x, 4] + r/
+        4, (2 r)/(\[Gamma] + \[Delta])*(Subscript[x, 4] + r/4) + (
+        r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+         2 r*\[Delta])/(\[Gamma] + \[Delta])}, {\[Delta], (
+         2 r)/(\[Gamma] + \[Delta])*(\[Delta]) + (
+        r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+         2 r*\[Delta])/(\[Gamma] + \[Delta])}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep]*)
+    Line[{{Subscript[x, 4] - r, 
+       k*(Subscript[x, 4] - r) - k*(\[Delta] + \[Gamma])/2 + r}, {\[Delta] + 
+        r, k*(\[Delta] + r) - k*(\[Delta] + \[Gamma])/2 + r}}] }];
+
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
 g15 = Graphics[Text[
-    Style[\[ScriptL]', FontSize -> 11, FontWeight -> "Thin", 
-     FontFamily -> "Courier New"], {-\[Delta] - 2 r, -r}, {1, 0}]];
-g16 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}], 
-    Point[{\[Gamma], 0}],(*Point[{Subscript[A, x],Subscript[A, y]}],
-    Point[{Subscript[B, x],Subscript[B, y]}],*)
-    Point[{Subscript[x, 4], Subscript[y, 4]}], PointSize[0.05]}];
-g17 = Graphics[{(*Green,*)(*Disk Subscript[C, 4]*)
-    Circle[{Subscript[x, 4], Subscript[y, 4]}, r]}];
-(*g18=Graphics[Text[
-Style[P,FontSize ->11,FontWeight ->"Thin",FontFamily->"Courier \
-New"],{(2t),(2t)*(r*Sqrt[\[Delta]^2-r^2])/(\[Delta]^2-r^2)-r},{1,0}]];*)
-g19 = Graphics[Text[
-    Style[Q, FontSize -> 11, FontWeight -> "Thin", 
-     FontFamily -> "Courier New"], {-\[Delta], 3 r}, {1, 0}]];
-(*g20=Graphics[{Black,(*line bisecting m2 and m3*)Line[{{Subscript[B, \
-x],Subscript[B, y]},{Subscript[o4, x]+2r,s*(Subscript[o4, x]+2r-Subscript[B, \
-x])+Subscript[B, y]}}]}];*)
+    Style[Subscript[\[ScriptL], def], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] + r/
+      4, (2 r)/(\[Gamma] + \[Delta])*(Subscript[x, 4] + r/4) + (
+      r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+       2 r*\[Delta])/(\[Gamma] + \[Delta])}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] - r - \[CurlyEpsilon], 
+     k*(Subscript[x, 4] - r - \[CurlyEpsilon]) - k*\[Delta]/2 + r}, {1, 0}]];
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], 2 r}], Point[{Subscript[x, 4], -2 r}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], 2 r}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], -2 r}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], 2 r}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 
+     4], -2 r}, {1, 0}]];
+g22 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 1], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {t + r + 2 b, r}, {1,
+      0}]];
+g23 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 2], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {t + r + 2 b, -r}, {1, 0}]];
 
-(* Label: SupportProperty3DisksCollinearCentersSlopes *)
+(* Label: CriticalFamiliesSize4Tangenti *)(*see handwritten pages for this \
+labeling scheme *)
 
-Show[g1, g2, g3, g4,(*g5,g6,*)(*g7,*)(*g8,g9,*)g10,(*g11,*)g12,(*g13,*)g14, \
-g15, g16, g17,(*g18,*)g19(*,g20*)]
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21, g22, g23]
 
-Out[656]= 1.21534
+Tangent Critical F4, case (ii), Subscript[\[ScriptL], def13L] supports C4 on RHS, Subscript[\[ScriptL], sep] supports C4 on right (from below)
 
-Out[669]= \!\(\*
-GraphicsBox[{{CircleBox[{-2, 0}, 1], CircleBox[{2, 0}, 1], 
-     CircleBox[{4.59, 0}, 1]}, 
-{GrayLevel[0], 
-     LineBox[NCache[{{-3, -3^Rational[1, 2]}, {9.59, 
-        5.536789081528512}}, {{-3, -1.7320508075688772`}, {9.59, 
-        5.536789081528512}}]]}, InsetBox[
-TagBox[
-StyleBox[
-SubscriptBox["C", "1"],
-FontFamily->"Courier New",
-FontSize->11,
-FontWeight->"Thin"],
-StyleForm[#, FontSize -> 11, FontWeight -> "Thin", 
-       FontFamily -> "Courier New"]& ], 
-     NCache[{Rational[-7, 4], Rational[-1, 2]}, {-1.75, -0.5}], 
-     ImageScaled[{1, Rational[1, 2]}]], InsetBox[
-TagBox[
-StyleBox[
-SubscriptBox["C", "2"],
-FontFamily->"Courier New",
-FontSize->11,
-FontWeight->"Thin"],
-StyleForm[#, FontSize -> 11, FontWeight -> "Thin", 
-       FontFamily -> "Courier New"]& ], 
-     NCache[{Rational[9, 4], Rational[-1, 2]}, {2.25, -0.5}], 
-     ImageScaled[{1, Rational[1, 2]}]], 
-{GrayLevel[0], 
-     LineBox[{{-3, -1.3680130463519369`}, {6.59, 1.6865259791463343`}}]}, 
-{GrayLevel[0], 
-     LineBox[{{-2, -6.435223154033333}, {7.59, 5.219883559315045}}]}, InsetBox[
-StyleBox[
-InterpretationBox[\[ScriptL],
-TextCell["\[ScriptL]"]],
-StripOnInput->False,
-FontFamily->"Courier New",
-FontSize->11,
-FontWeight->"Thin"], {-4, 1}, ImageScaled[{1, Rational[1, 2]}]], InsetBox[
-StyleBox[
-InterpretationBox[\[ScriptL]',
-TextCell["\[ScriptL]'"]],
-StripOnInput->False,
-FontFamily->"Courier New",
-FontSize->11,
-FontWeight->"Thin"], {-4, -1}, ImageScaled[{1, Rational[1, 2]}]], {
-     PointBox[{-2, 0}], PointBox[{2, 0}], PointBox[{4.59, 0}], 
-     PointBox[{-6.92221002163379, -10.843515111683859`}], 
-{PointSize[0.05]}}, CircleBox[{-6.92221002163379, -10.843515111683859}, 1], 
-    InsetBox[
-StyleBox[
-InterpretationBox[Q,
-TextCell[
-RawBoxes[
-Cell[
-BoxData[
-FormBox["Q", TraditionalForm]]]]]],
-StripOnInput->False,
-FontFamily->"Courier New",
-FontSize->11,
-FontWeight->"Thin"], {-2, 3}, ImageScaled[{1, Rational[1, 2]}]]},
-Axes->True,
-AxesLabel->{
-FormBox["x", TraditionalForm], 
-FormBox["y", TraditionalForm]},
-Ticks->None]\)
+In[23]:= (*Originally from: Familyof5CirclesDisjointCorollary *)
+(*taken from: SupportSkProperty3DisksCollinearNondisjont *)
+(*\[Delta]=2/Sqrt[3];*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of x-coordinate of center of disk Subscript[C, \
+1] and Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+k = \!\(TraditionalForm\`
+\*FractionBox[\(4  r\), \(2  \[Delta] + 2  \[Gamma] + 
+\*SqrtBox[\(4 
+\*SuperscriptBox[\(r\), \(2\)] + 
+\*SuperscriptBox[\(\[Gamma]\), \(2\)] + 2  \[Delta]*\[Gamma] + 
+\*SuperscriptBox[\(\[Delta]\), \(2\)]\)]\)]\);(*slope of line lsep for C2/C3*)
 
-Derivation of Subscript[x, 4] based on support from ellsep12 and ellsep13, setting y4 = y4
 
-In[1]:= Clear[x4, r, \[Delta], \[Gamma]]
-MultiplySides[
- r/Sqrt[\[Delta]^2 - r^2]*(x4 - \[Delta]) == (2 r)/
-   Sqrt[(\[Delta] + \[Gamma])^2 - 4 r^2]*(x4 + \[Delta]), 
- Sqrt[(\[Delta] + \[Gamma])^2 - 4 r^2]*Sqrt[\[Delta]^2 - r^2]]
+t = (2/3) r + \[Delta]; 
+\[Beta] = 13 + 3 Sqrt[33]; \[Gamma] = 
+ N[r/(3 CubeRoot[\[Beta]])*(CubeRoot[2*\[Beta]^(2)] - CubeRoot[\[Beta]] - 
+     4*CubeRoot[
+       4])](*\[Gamma] is x-coordinate of center of disk Subscript[C, 3]*)(*We \
+use the absolute value for \[Gamma]*)
+Subscript[x, 
+  4] = -(Sqrt[
+      4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + \[Gamma] + 
+     2 \[Delta]);(*Subscript[x, 4] is x-coordinate of center of disk \
+Subscript[C, 4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+(*Subscript[s, 2]=(2r)/(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 2](x), hence the mnemonic.*)
+(*Subscript[s, 3]=(2r)/(Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 3](x), hence the mnemonic.*)
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,
+   y}*)];(*Three disks within horizontal slab between line Subscript[\
+\[ScriptL], 1] and line Subscript[\[ScriptL], 2]*)
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{Subscript[x, 4] - r, r}, {t + r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{Subscript[x, 4] - r, -r}, {t + 
+        r, -r}}],(*Black,(*support line Subscript[m, 1], vertical*)
+    Line[{{\[Delta]-r,-3(r)},{\[Delta]-r,3(r)}}],Black,(* 
+    support line Subscript[m, 3], vertical*)Line[{{\[Delta]+
+    r,-(3r)},{\[Delta]+r,(3r)}}]*)}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r, 
+     0}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+(3r)/2,-3r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def]*)
+    Line[{{Subscript[x, 
+       4], (2 r)/(\[Gamma] + \[Delta])*(Subscript[x, 4]) + (
+        r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+         2 r*\[Delta])/(\[Gamma] + \[Delta])}, {\[Gamma], (
+         2 r)/(\[Gamma] + \[Delta])*(\[Gamma]) + (
+        r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+         2 r*\[Delta])/(\[Gamma] + \[Delta])}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep]*)
+    Line[{{Subscript[x, 4], 
+       k*(Subscript[x, 4]) - k*(\[Delta] + \[Gamma])/2 + r}, {\[Delta] + r, 
+       k*(\[Delta] + r) - k*(\[Delta] + \[Gamma])/2 + r}}] }];
 
-Out[2]= \!\(
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-RowBox[{
-RowBox[{"r", " ", 
-RowBox[{"(", 
-RowBox[{"x4", "-", "\[Delta]"}], ")"}], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}], "==", 
-RowBox[{"2", " ", "r", " ", 
-RowBox[{"(", 
-RowBox[{"x4", "+", "\[Delta]"}], ")"}], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}]}], 
-RowBox[{
-RowBox[{
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}], "!=", "0"}]},
-{
-RowBox[{
-FractionBox[
-RowBox[{"r", " ", 
-RowBox[{"(", 
-RowBox[{"x4", "-", "\[Delta]"}], ")"}]}], 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]], "==", 
-FractionBox[
-RowBox[{"2", " ", "r", " ", 
-RowBox[{"(", 
-RowBox[{"x4", "+", "\[Delta]"}], ")"}]}], 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]]}], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.84]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.35]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False,
-StripWrapperBoxes->True]\)
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 
+     4], (2 r)/(\[Gamma] + \[Delta])*(Subscript[x, 4]) + (
+      r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+       2 r*\[Delta])/(\[Gamma] + \[Delta])}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4], 
+     k*(Subscript[x, 4]) - k*(\[Delta] + \[Gamma])/2 + r}, {1, 
+     0}]];(*{Subscript[x, 4]-r-\[CurlyEpsilon],k*(Subscript[x, 4]-r-\
+\[CurlyEpsilon])-k*\[Delta]/2+r}*)
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], 2 r}], Point[{Subscript[x, 4], -2 r}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], 2 r}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], -2 r}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], 2 r}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 
+     4], -2 r}, {1, 0}]];
 
-In[4]:= AddSides[r (x4 - \[Delta]) Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2] == 
-  2 r (x4 + \[Delta]) Sqrt[-r^2 + \[Delta]^2], -2 r (x4 + \[Delta]) Sqrt[-r^2 \
-+ \[Delta]^2]]
+(* Label: CriticalFamiliesSize4Tangentii *)(*see handwritten pages 11/20/19 \
+for this labeling scheme *)
 
-Out[4]= -2 r (x4 + \[Delta]) Sqrt[-r^2 + \[Delta]^2] + 
-  r (x4 - \[Delta]) Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2] == 0
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21]
 
-In[5]:= Collect[-2 r (x4 + \[Delta]) Sqrt[-r^2 + \[Delta]^2] + 
-   r (x4 - \[Delta]) Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2] == 0, x4]
+Tangent Critical F4, case (iii), Subscript[\[ScriptL], def13L] supports C4 on RHS, Subscript[\[ScriptL], def23R] supports C4 on left (from below)
 
-Out[5]= -2 r \[Delta] Sqrt[-r^2 + \[Delta]^2] - 
-  r \[Delta] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2] + 
-  x4 (-2 r Sqrt[-r^2 + \[Delta]^2] + 
-     r Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]) == 0
+(*Copied from Case (ii) above *)
+\[Delta] = r;
+ (*magnitude of x-coordinate of x-coordinate of center of disk Subscript[C, \
+1] and Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+ldef23Rslope = \!\(TraditionalForm\`
+\*FractionBox[\(\(-2\) r\), \(\[Delta] - \[Gamma]\)]\);(*slope of line \
+Subscript[\[ScriptL], def23R] for C2/C3*)
+ldef23Rint = (
+  2 r*\[Delta] + 
+   r*Sqrt[4 r^2 + \[Delta]^2 - 2 \[Delta]*\[Gamma] + \[Gamma]^2])/(
+  r - \[Gamma]);
+t = (2/3) r + \[Delta]; 
+\[Gamma] = 0.3551287987727411` (*2.392030791355326`*);
+(*\[Gamma] is x-coordinate of center of disk Subscript[C, 3]*)(*We use the \
+absolute value for \[Gamma]*)
+Subscript[y, 4] = (
+  2 r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+   4 r^2)/(\[Gamma] + 
+   r);(*Subscript[x, 4] is x-coordinate of center of disk Subscript[C, \
+4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+Subscript[x, 4] = r;
+(*Subscript[s, 2]=(2r)/(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 2](x), hence the mnemonic.*)
+(*Subscript[s, 3]=(2r)/(Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 3](x), hence the mnemonic.*)
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,
+   y}*)];(*Two disks within horizontal slab between line \
+Subscript[\[ScriptL], 1] and line Subscript[\[ScriptL], 2]*)
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{-r - r, r}, {r + r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{-r - r, -r}, {r + r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -(r)}, {0, Subscript[y, 4] + r}}](*,Black,(* 
+    support line Subscript[m, 3], vertical*)Line[{{\[Delta]+
+    r,-(3r)},{\[Delta]+r,(3r)}}]*)}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r, 
+     0}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+(3r)/2,-3r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def13L ]*)
+    Line[{{-2 r - (r + \[Gamma] - Abs[r - \[Gamma]])/(
+        r + \[Gamma] + Abs[r - \[Gamma]]) - \[Gamma], (
+         2 r)/(\[Gamma] + \[Delta])*(-2 r - (
+           r + \[Gamma] - Abs[r - \[Gamma]])/(
+           r + \[Gamma] + Abs[r - \[Gamma]]) - \[Gamma]) + (
+        r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+         2 r*\[Delta])/(\[Gamma] + \[Delta])}, {Subscript[x, 4] + 
+        r + \[Gamma]/
+        r, (2 r)/(\[Gamma] + \[Delta])*(Subscript[x, 4] + r + \[Gamma]/r) + (
+        r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+         2 r*\[Delta])/(\[Gamma] + \[Delta])}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], def23R]*)
+    Line[{{-(\[Gamma]/r), 
+       ldef23Rslope*(-(\[Gamma]/r)) + ldef23Rint}, {\[Delta] + r + \[Gamma]/r,
+        ldef23Rslope*(\[Delta] + r + \[Gamma]/r) + ldef23Rint}}] }];
 
-In[6]:= AddSides[-2 r \[Delta] Sqrt[-r^2 + \[Delta]^2] - 
-   r \[Delta] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2] + 
-   x4 (-2 r Sqrt[-r^2 + \[Delta]^2] + 
-      r Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]) == 
-  0, -(-2 r \[Delta] Sqrt[-r^2 + \[Delta]^2] - 
-    r \[Delta] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])]
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def13L], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {-2 r - (
+      r + \[Gamma] - Abs[r - \[Gamma]])/(
+      r + \[Gamma] + Abs[r - \[Gamma]]) - \[Gamma], (
+       2 r)/(\[Gamma] + \[Delta])*(-2 r - (r + \[Gamma] - Abs[r - \[Gamma]])/(
+         r + \[Gamma] + Abs[r - \[Gamma]]) - \[Gamma]) + (
+      r*Sqrt[4 r^2 + \[Gamma]^2 + 2 \[Delta]*\[Gamma] + \[Delta]^2] + 
+       2 r*\[Delta])/(\[Gamma] + \[Delta])}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def23R], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-(\[Gamma]/r), 
+     ldef23Rslope*(-(\[Gamma]/r)) + ldef23Rint}, {1, 
+     0}]];(*{Subscript[x, 4]-r-\[CurlyEpsilon],k*(Subscript[x, 4]-r-\
+\[CurlyEpsilon])-k*\[Delta]/2+r}*)
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], 2 r}], Point[{Subscript[x, 4], Subscript[y, 4]}], 
+    PointSize[0.05]}];
+g18 = Graphics[{(*Disk C3*)Circle[{\[Gamma], 2 r}, r],(*Disk C4 *)
+    Circle[{r, Subscript[y, 4]}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], 2 r}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4], 
+     Subscript[y, 4]}, {1, 0}]];
 
-Out[6]= x4 (-2 r Sqrt[-r^2 + \[Delta]^2] + 
-    r Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]) == 
- 2 r \[Delta] Sqrt[-r^2 + \[Delta]^2] + 
-  r \[Delta] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]
+(* Label: CriticalFamiliesSize4Tangentiii *)(*see handwritten pages 11/20/19 \
+for this labeling scheme *)
 
-In[7]:= MultiplySides[
- x4 (-2 r Sqrt[-r^2 + \[Delta]^2] + 
-     r Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]) == 
-  2 r \[Delta] Sqrt[-r^2 + \[Delta]^2] + 
-   r \[Delta] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2], 1/(-2 r Sqrt[-r^2 + \
-\[Delta]^2] + r Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])]
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21]
 
-Out[7]= \!\(
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-RowBox[{"x4", "==", 
-FractionBox[
-RowBox[{
-RowBox[{"2", " ", "r", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"r", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}]}], 
-RowBox[{
-RowBox[{
-RowBox[{"-", "2"}], " ", "r", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"r", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}]}]]}], 
-RowBox[{
-FractionBox["1", 
-RowBox[{
-RowBox[{
-RowBox[{"-", "2"}], " ", "r", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"r", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}]}]], "!=", "0"}]},
-{
-RowBox[{
-RowBox[{"x4", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{
-RowBox[{"-", "2"}], " ", "r", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"r", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}]}], ")"}]}], "==", 
-RowBox[{
-RowBox[{"2", " ", "r", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"r", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}]}]}], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.84]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.35]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False,
-StripWrapperBoxes->True]\)
+ 
 
-In[8]:= Clear[r, \[Delta], \[Gamma]]
--Simplify[(
-  2 r \[Delta] Sqrt[-r^2 + \[Delta]^2] + 
-   r \[Delta] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])/(-2 r Sqrt[-r^2 + \
-\[Delta]^2] + r Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])]
+The determining equation of the family case (iii)
 
-Out[9]= (\[Delta] (2 Sqrt[-r^2 + \[Delta]^2] + 
-   Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]))/(
-2 Sqrt[-r^2 + \[Delta]^2] - Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])
+Clear[r, \[Gamma]]
+(2 r + Sqrt[5*r^{2} + 2 r*\[Gamma] + \[Gamma]^{2}])/(\[Gamma] + r) = 
+ Sqrt[4 r^{2} + (r - \[Gamma])^{2}]/(r - \[Gamma])
 
-In[15]:= Simplify[PowerExpand[\[Delta] /(
-   2 Sqrt[-r^2 + \[Delta]^2] - Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])*(1/(
-    2 Sqrt[-r^2 + \[Delta]^2] + 
-     Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]))]](*actual numerator: \[Delta] \
-(2 Sqrt[-r^2+\[Delta]^2]+Sqrt[-4 r^2+(\[Gamma]+\[Delta])^2]) *)
+In[1]:= (*Collect,Expand,ExpandAll,Solve,Simplify,Together,PowerExpand,Cancel*)
+Clear[r, \[Gamma]]
+Simplify[MultiplySides[(
+   2 r + Sqrt[5*r^{2} + 2 r*\[Gamma] + \[Gamma]^{2}])/(\[Gamma] + r) == 
+   Sqrt[4 r^{2} + (r - \[Gamma])^{2}]/(r - \[Gamma]), \[Gamma] + r]]
 
-Out[15]= -(\[Delta]/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 3 \[Delta]^2))
+In[3]:= Simplify[MultiplySides[
+  2 r + Sqrt[5 r^2 + 2 r \[Gamma] + \[Gamma]^2] == (
+   Sqrt[4 r^2 + (r - \[Gamma])^2] (r + \[Gamma]))/(r - \[Gamma]), 
+  r - \[Gamma]]]
 
--((\[Delta]*(2 Sqrt[-r^2 + \[Delta]^2] + 
-    Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]))/(\[Gamma]^2 + 
-  2 \[Gamma] \[Delta] - 3 \[Delta]^2))
+Revised approach to equation
 
-In[16]:= PowerExpand[ ( -((\[Delta]*(2 Sqrt[-r^2 + \[Delta]^2] + 
-       Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]))/(\[Gamma]^2 + 
-     2 \[Gamma] \[Delta] - 3 \[Delta]^2)))*(2 Sqrt[-r^2 + \[Delta]^2] + 
-    Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])]
+In[3]:= Clear[r, \[Gamma]]
+MultiplySides[(
+  2 r + Sqrt[5*r^{2} + 2 r*\[Gamma] + \[Gamma]^{2}])/(\[Gamma] + r) == 
+  Sqrt[4 r^{2} + (r - \[Gamma])^{2}]/(
+  r - \[Gamma]), (\[Gamma] + r)*(r - \[Gamma])]
 
-Out[16]= -((\[Delta] (2 Sqrt[-r^2 + \[Delta]^2] + 
-    Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])^2)/(\[Gamma]^2 + 
-  2 \[Gamma] \[Delta] - 3 \[Delta]^2))
+In[6]:= Expand[((r - \[Gamma]) (2 r + Sqrt[
+      5 r^2 + 2 r \[Gamma] + \[Gamma]^2]))^2 == (Sqrt[
+    4 r^2 + (r - \[Gamma])^2] (r + \[Gamma]))^2]
 
-In[18]:= Expand[-((\[Delta] (2 Sqrt[-r^2 + \[Delta]^2] + 
-     Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])^2)/(\[Gamma]^2 + 
-   2 \[Gamma] \[Delta] - 3 \[Delta]^2))]
+In[7]:= Collect[9 r^4 - 16 r^3 \[Gamma] + 6 r^2 \[Gamma]^2 + \[Gamma]^4 + 
+   4 r^3 Sqrt[5 r^2 + 2 r \[Gamma] + \[Gamma]^2] - 
+   8 r^2 \[Gamma] Sqrt[5 r^2 + 2 r \[Gamma] + \[Gamma]^2] + 
+   4 r \[Gamma]^2 Sqrt[5 r^2 + 2 r \[Gamma] + \[Gamma]^2] == 
+  5 r^4 + 8 r^3 \[Gamma] + 2 r^2 \[Gamma]^2 + \[Gamma]^4, Sqrt[
+ 5 r^2 + 2 r \[Gamma] + \[Gamma]^2]]
 
-Out[18]= (8 r^2 \[Delta])/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-  3 \[Delta]^2) - (\[Gamma]^2 \[Delta])/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-  3 \[Delta]^2) - (
- 2 \[Gamma] \[Delta]^2)/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 3 \[Delta]^2) - (
- 5 \[Delta]^3)/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 3 \[Delta]^2) - (
- 4 \[Delta] Sqrt[-r^2 + \[Delta]^2]
-   Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])/(\[Gamma]^2 + 
-  2 \[Gamma] \[Delta] - 3 \[Delta]^2)
+In[8]:= AddSides[9 r^4 - 16 r^3 \[Gamma] + 6 r^2 \[Gamma]^2 + \[Gamma]^4 + 
+   Sqrt[5 r^2 + 
+     2 r \[Gamma] + \[Gamma]^2] (4 r^3 - 8 r^2 \[Gamma] + 4 r \[Gamma]^2) == 
+  5 r^4 + 8 r^3 \[Gamma] + 
+   2 r^2 \[Gamma]^2 + \[Gamma]^4, -(9 r^4 - 16 r^3 \[Gamma] + 
+    6 r^2 \[Gamma]^2 + \[Gamma]^4)]
 
-In[19]:= Together[(8 r^2 \[Delta])/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-   3 \[Delta]^2) - (\[Gamma]^2 \[Delta])/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-   3 \[Delta]^2) - (
-  2 \[Gamma] \[Delta]^2)/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 3 \[Delta]^2) - (
-  5 \[Delta]^3)/(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 3 \[Delta]^2) - (
-  4 \[Delta] Sqrt[-r^2 + \[Delta]^2]
-    Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])/(\[Gamma]^2 + 
-   2 \[Gamma] \[Delta] - 3 \[Delta]^2)]
+In[9]:= Expand[(Sqrt[
+    5 r^2 + 2 r \[Gamma] + \[Gamma]^2] (4 r^3 - 8 r^2 \[Gamma] + 
+      4 r \[Gamma]^2))^2 == (-4 r^4 + 24 r^3 \[Gamma] - 4 r^2 \[Gamma]^2)^2]
 
-Out[19]= (-8 r^2 \[Delta] + \[Gamma]^2 \[Delta] + 2 \[Gamma] \[Delta]^2 + 
- 5 \[Delta]^3 + 
- 4 \[Delta] Sqrt[-r^2 + \[Delta]^2]
-   Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])/(-\[Gamma]^2 - 
- 2 \[Gamma] \[Delta] + 3 \[Delta]^2)
+In[10]:= AddSides[80 r^8 - 288 r^7 \[Gamma] + 368 r^6 \[Gamma]^2 - 
+   192 r^5 \[Gamma]^3 + 48 r^4 \[Gamma]^4 - 32 r^3 \[Gamma]^5 + 
+   16 r^2 \[Gamma]^6 == 
+  16 r^8 - 192 r^7 \[Gamma] + 608 r^6 \[Gamma]^2 - 192 r^5 \[Gamma]^3 + 
+   16 r^4 \[Gamma]^4, -(16 r^8 - 192 r^7 \[Gamma] + 608 r^6 \[Gamma]^2 - 
+    192 r^5 \[Gamma]^3 + 16 r^4 \[Gamma]^4)]
 
-The above is an expression for Subscript[x, 4]. We use this together with support from ellsep23 and we derive expression for Subscript[y, 4] in terms of r,Delta and Gamma
+This is now the complete system. Set this equal to 0 and solve.
 
-(2 r)/Sqrt[(\[Delta] - \[Gamma])^2 - 4 r^2] (Subscript[x, 
-     4] - (\[Delta] + \[Gamma])/2) - y4 = 
- r*(\[Delta] - \[Gamma])/Sqrt[(\[Delta] - \[Gamma])^2 - 4 r^2]
+In[11]:= Clear[\[Gamma]]
+r = 1
+NSolve[64 r^8 - 96 r^7 \[Gamma] - 240 r^6 \[Gamma]^2 + 32 r^4 \[Gamma]^4 - 
+   32 r^3 \[Gamma]^5 + 16 r^2 \[Gamma]^6 == 0, \[Gamma]]
 
-The above is the primary equation for ellsep23 support C4, now use the value for Subscript[x, 4] above.
+In[12]:= Solve[64 r^8 - 96 r^7 \[Gamma] - 240 r^6 \[Gamma]^2 + 32 r^4 \[Gamma]^4 - 
+   32 r^3 \[Gamma]^5 + 16 r^2 \[Gamma]^6 == 0, \[Gamma], {r > 0}]
 
-In[348]:= Clear[r, \[Delta], \[Gamma], y4]
-MultiplySides[(2 r)/
-    Sqrt[(\[Delta] - \[Gamma])^2 - 
-      4 r^2] ((-8 r^2 \[Delta] + \[Gamma]^2 \[Delta] + 
-       2 \[Gamma] \[Delta]^2 + 5 \[Delta]^3 + 
-       4 \[Delta] Sqrt[-r^2 + \[Delta]^2]
-         Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])/(-\[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + 3 \[Delta]^2) - (\[Delta] + \[Gamma])/2) - y4 == 
-  r*(\[Delta] - \[Gamma])/Sqrt[(\[Delta] - \[Gamma])^2 - 4 r^2], 
- Sqrt[(\[Delta] - \[Gamma])^2 - 4 r^2]*2*(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-    3 \[Delta]^2)]
+In[1]:= Clear[\[Gamma]]
+r = 1
+Solve[64 r^8 - 96 r^7 \[Gamma] - 240 r^6 \[Gamma]^2 + 32 r^4 \[Gamma]^4 - 
+   32 r^3 \[Gamma]^5 + 16 r^2 \[Gamma]^6 == 0, \[Gamma], PositiveReals]
 
-Out[349]= \!\(
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-RowBox[{
-RowBox[{"2", " ", 
-RowBox[{"(", 
-RowBox[{
-SuperscriptBox["\[Gamma]", "2"], "+", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "-", 
-RowBox[{"3", " ", 
-SuperscriptBox["\[Delta]", "2"]}]}], ")"}], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "+", "\[Delta]"}], ")"}], "2"]}]], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "y4"}], "+", 
-FractionBox[
-RowBox[{"2", " ", "r", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{
-FractionBox["1", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "-", "\[Delta]"}], ")"}]}], "+", 
-FractionBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "8"}], " ", 
-SuperscriptBox["r", "2"], " ", "\[Delta]"}], "+", 
-RowBox[{
-SuperscriptBox["\[Gamma]", "2"], " ", "\[Delta]"}], "+", 
-RowBox[{"2", " ", "\[Gamma]", " ", 
-SuperscriptBox["\[Delta]", "2"]}], "+", 
-RowBox[{"5", " ", 
-SuperscriptBox["\[Delta]", "3"]}], "+", 
-RowBox[{"4", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}]}], 
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["\[Gamma]", "2"]}], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-RowBox[{"3", " ", 
-SuperscriptBox["\[Delta]", "2"]}]}]]}], ")"}]}], 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "+", "\[Delta]"}], ")"}], "2"]}]]]}], ")"}]}], 
-          "==", 
-RowBox[{"2", " ", "r", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "+", "\[Delta]"}], ")"}], " ", 
-RowBox[{"(", 
-RowBox[{
-SuperscriptBox["\[Gamma]", "2"], "+", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "-", 
-RowBox[{"3", " ", 
-SuperscriptBox["\[Delta]", "2"]}]}], ")"}]}]}], 
-RowBox[{
-RowBox[{"2", " ", 
-RowBox[{"(", 
-RowBox[{
-SuperscriptBox["\[Gamma]", "2"], "+", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "-", 
-RowBox[{"3", " ", 
-SuperscriptBox["\[Delta]", "2"]}]}], ")"}], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "+", "\[Delta]"}], ")"}], "2"]}]]}], "!=", "0"}]},
-{
-RowBox[{
-RowBox[{
-RowBox[{"-", "y4"}], "+", 
-FractionBox[
-RowBox[{"2", " ", "r", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{
-FractionBox["1", "2"], " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "-", "\[Delta]"}], ")"}]}], "+", 
-FractionBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "8"}], " ", 
-SuperscriptBox["r", "2"], " ", "\[Delta]"}], "+", 
-RowBox[{
-SuperscriptBox["\[Gamma]", "2"], " ", "\[Delta]"}], "+", 
-RowBox[{"2", " ", "\[Gamma]", " ", 
-SuperscriptBox["\[Delta]", "2"]}], "+", 
-RowBox[{"5", " ", 
-SuperscriptBox["\[Delta]", "3"]}], "+", 
-RowBox[{"4", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{"\[Gamma]", "+", "\[Delta]"}], ")"}], "2"]}]]}]}], 
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["\[Gamma]", "2"]}], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-RowBox[{"3", " ", 
-SuperscriptBox["\[Delta]", "2"]}]}]]}], ")"}]}], 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "+", "\[Delta]"}], ")"}], "2"]}]]]}], "==", 
-FractionBox[
-RowBox[{"r", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "+", "\[Delta]"}], ")"}]}], 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox[
-RowBox[{"(", 
-RowBox[{
-RowBox[{"-", "\[Gamma]"}], "+", "\[Delta]"}], ")"}], "2"]}]]]}], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.84]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.35]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False,
-StripWrapperBoxes->True]\)
+In[19]:= Clear[x]
+NSolve[4 - 14 x + 9 x^2 - 4 x^3 + x^4 == 0]
 
-In[350]:= Cancel[2 (\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-     3 \[Delta]^2) Sqrt[-4 r^2 + (-\[Gamma] + \[Delta])^2] (-y4 + (
-     2 r (1/2 (-\[Gamma] - \[Delta]) + (-8 r^2 \[Delta] + \[Gamma]^2 \[Delta] \
-+ 2 \[Gamma] \[Delta]^2 + 5 \[Delta]^3 + 
-         4 \[Delta] Sqrt[-r^2 + \[Delta]^2]
-           Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2])/(-\[Gamma]^2 - 
-         2 \[Gamma] \[Delta] + 3 \[Delta]^2)))/
-     Sqrt[-4 r^2 + (-\[Gamma] + \[Delta])^2]) == 
-  2 r (-\[Gamma] + \[Delta]) (\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-     3 \[Delta]^2)]
+Tangent Critical F4, case (iv),\[Gamma]=r, Subscript[\[ScriptL], def13L] supports C4 on RHS, Subscript[\[ScriptL], sep] supports C4 on right (from below)
 
-Out[350]= -2 (r \[Gamma]^3 - 16 r^3 \[Delta] + 5 r \[Gamma]^2 \[Delta] + 
-    3 r \[Gamma] \[Delta]^2 + 7 r \[Delta]^3 + 
-    y4 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-      2 \[Gamma] \[Delta] + \[Delta]^2] + 
-    2 y4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-      2 \[Gamma] \[Delta] + \[Delta]^2] - 
-    3 y4 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-      2 \[Gamma] \[Delta] + \[Delta]^2] + 
-    8 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-      Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]) == -2 r (\[Gamma] - \[Delta]) (\
-\[Gamma]^2 + 2 \[Gamma] \[Delta] - 3 \[Delta]^2)
+In[410]:= (*Originally from: Familyof5CirclesDisjointCorollary *)
+(*taken from: SupportSkProperty3DisksCollinearNondisjont *)
+(*\[Delta]=2/Sqrt[3];*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of x-coordinate of center of disk Subscript[C, \
+1] and Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+\[ScriptL]sep23Slope = \!\(TraditionalForm\`
+\*FractionBox[\(y3 + 2  r\), \(r + 
+\*FractionBox[\(2  r\), \(y3\)] \((
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)] + 
+\*FractionBox[\(y3\), \(2\)] + 2  r)\)\)]\);(*slope of line lsep for C2/C3*)
+\[ScriptL]sep23int = \[ScriptL]sep23Slope*(-r) + y3/2;
+\[Gamma] = r(*\[Gamma] is x-coordinate of center of disk Subscript[C, \
+3]*)(*We use the absolute value for \[Gamma]*)
+Subscript[x, 4] = 
+ N[-((2 r)/y3) (Sqrt[y3^2 + 4 r^2] + y3/2 + 
+     2 r)](*Subscript[x, 4] is x-coordinate of center of disk Subscript[C, \
+4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+y3 = 2.4648462125673194`;
+(*Subscript[s, 2]=(2r)/(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 2](x), hence the mnemonic.*)
+(*Subscript[s, 3]=(2r)/(Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 3](x), hence the mnemonic.*)
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,
+   y}*)];(*Three disks within horizontal slab between line Subscript[\
+\[ScriptL], 1] and line Subscript[\[ScriptL], 2]*)
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{Subscript[x, 4] - r, r}, {\[Gamma] + r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{Subscript[x, 4] - r, -r}, {\[Gamma] + r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -2 (r) - r}, {0, y3 + r}}](*,Black,(* support line Subscript[m, 
+    3], vertical*)Line[{{\[Delta]+r,-(3r)},{\[Delta]+r,(3r)}}]*)}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r, 
+     0}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+(3r)/2,-3r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def13L]*)
+    Line[{{Subscript[x, 4] - r/2, 
+       y3/(2 r)*(Subscript[x, 4] - r/2) + (Sqrt[y3^2 + 4 r^2] + y3)/
+        2}, {\[Gamma], y3/(2 r)*(\[Gamma]) + (Sqrt[y3^2 + 4 r^2] + y3)/2}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep23]*)
+    Line[{{Subscript[x, 
+       4], \[ScriptL]sep23Slope*(Subscript[x, 
+          4]) + \[ScriptL]sep23int}, {\[Delta] + 
+        r, \[ScriptL]sep23Slope*(\[Delta] + r) + \[ScriptL]sep23int}}] }];
 
-In[351]:= ExpandAll[-2 (r \[Gamma]^3 - 16 r^3 \[Delta] + 5 r \[Gamma]^2 \[Delta] + 
-     3 r \[Gamma] \[Delta]^2 + 7 r \[Delta]^3 + 
-     y4 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2] + 
-     2 y4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2] - 
-     3 y4 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2] + 
-     8 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-       Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]) == -2 r (\[Gamma] - \[Delta]) \
-(\[Gamma]^2 + 2 \[Gamma] \[Delta] - 3 \[Delta]^2)]
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def13L], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] - r/2, 
+     y3/(2 r)*(Subscript[x, 4] - r/2) + (Sqrt[y3^2 + 4 r^2] + y3)/2}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep23], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 
+     4], \[ScriptL]sep23Slope*(Subscript[x, 4]) + \[ScriptL]sep23int}, {1, 
+     0}]];(*{Subscript[x, 4]-r-\[CurlyEpsilon],k*(Subscript[x, 4]-r-\
+\[CurlyEpsilon])-k*\[Delta]/2+r}*)
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], y3}], Point[{Subscript[x, 4], -2 r}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], y3}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], -2 r}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], y3}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 
+     4], -2 r}, {1, 0}]];
 
-Out[351]= -2 r \[Gamma]^3 + 32 r^3 \[Delta] - 10 r \[Gamma]^2 \[Delta] - 
-  6 r \[Gamma] \[Delta]^2 - 14 r \[Delta]^3 - 
-  2 y4 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-    2 \[Gamma] \[Delta] + \[Delta]^2] - 
-  4 y4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-    2 \[Gamma] \[Delta] + \[Delta]^2] + 
-  6 y4 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-    2 \[Gamma] \[Delta] + \[Delta]^2] - 
-  16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-    Sqrt[-4 r^2 + \[Gamma]^2 + 
-    2 \[Gamma] \[Delta] + \[Delta]^2] == -2 r \[Gamma]^3 - 
-  2 r \[Gamma]^2 \[Delta] + 10 r \[Gamma] \[Delta]^2 - 6 r \[Delta]^3
+(* Label: CriticalFamiliesSize4Tangentiv *)(*see handwritten pages 11/20/19 \
+for this labeling scheme *)
 
-In[352]:= Collect[-2 r \[Gamma]^3 + 32 r^3 \[Delta] - 10 r \[Gamma]^2 \[Delta] - 
-   6 r \[Gamma] \[Delta]^2 - 14 r \[Delta]^3 - 
-   2 y4 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-     2 \[Gamma] \[Delta] + \[Delta]^2] - 
-   4 y4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-     2 \[Gamma] \[Delta] + \[Delta]^2] + 
-   6 y4 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-     2 \[Gamma] \[Delta] + \[Delta]^2] - 
-   16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-     Sqrt[-4 r^2 + \[Gamma]^2 + 
-     2 \[Gamma] \[Delta] + \[Delta]^2] == -2 r \[Gamma]^3 - 
-   2 r \[Gamma]^2 \[Delta] + 10 r \[Gamma] \[Delta]^2 - 6 r \[Delta]^3, y4]
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21]
 
-Out[352]= -2 r \[Gamma]^3 + 32 r^3 \[Delta] - 10 r \[Gamma]^2 \[Delta] - 
-  6 r \[Gamma] \[Delta]^2 - 14 r \[Delta]^3 - 
-  16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-    Sqrt[-4 r^2 + \[Gamma]^2 + 2 \[Gamma] \[Delta] + \[Delta]^2] + 
-  y4 (-2 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2] - 
-     4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2] + 
-     6 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2]) == -2 r \[Gamma]^3 - 
-  2 r \[Gamma]^2 \[Delta] + 10 r \[Gamma] \[Delta]^2 - 6 r \[Delta]^3
+Finding an expression for y3
 
-In[353]:= AddSides[-2 r \[Gamma]^3 + 32 r^3 \[Delta] - 10 r \[Gamma]^2 \[Delta] - 
-   6 r \[Gamma] \[Delta]^2 - 14 r \[Delta]^3 - 
-   16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-     Sqrt[-4 r^2 + \[Gamma]^2 + 2 \[Gamma] \[Delta] + \[Delta]^2] + 
-   y4 (-2 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-        2 \[Gamma] \[Delta] + \[Delta]^2] - 
-      4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-        2 \[Gamma] \[Delta] + \[Delta]^2] + 
-      6 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-        2 \[Gamma] \[Delta] + \[Delta]^2]) == -2 r \[Gamma]^3 - 
-   2 r \[Gamma]^2 \[Delta] + 10 r \[Gamma] \[Delta]^2 - 
-   6 r \[Delta]^3, -(-2 r \[Gamma]^3 + 32 r^3 \[Delta] - 
-    10 r \[Gamma]^2 \[Delta] - 6 r \[Gamma] \[Delta]^2 - 14 r \[Delta]^3 - 
-    16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-      Sqrt[-4 r^2 + \[Gamma]^2 + 2 \[Gamma] \[Delta] + \[Delta]^2])]
+Evaluating with lemma vector distance, the line Subscript[\[ScriptL], sep23] and the center Subscript[o, 4] leads to
 
-Out[353]= y4 (-2 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-      2 \[Gamma] \[Delta] + \[Delta]^2] - 
-    4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-      2 \[Gamma] \[Delta] + \[Delta]^2] + 
-    6 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-      2 \[Gamma] \[Delta] + \[Delta]^2]) == -32 r^3 \[Delta] + 
-  8 r \[Gamma]^2 \[Delta] + 16 r \[Gamma] \[Delta]^2 + 8 r \[Delta]^3 + 
-  16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-    Sqrt[-4 r^2 + \[Gamma]^2 + 2 \[Gamma] \[Delta] + \[Delta]^2]
+Clear[r, y3]
+(*r=1;*)
+k = \!\(TraditionalForm\`
+\*FractionBox[\(2*y3*\((y3 + 2  r)\)\), \(4  r*y3 + 8*
+\*SuperscriptBox[\(r\), \(2\)] + 4  r*
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)]\);
 
-In[354]:= MultiplySides[
- y4 (-2 \[Gamma]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2] - 
-     4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2] + 
-     6 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 
-       2 \[Gamma] \[Delta] + \[Delta]^2]) == -32 r^3 \[Delta] + 
-   8 r \[Gamma]^2 \[Delta] + 16 r \[Gamma] \[Delta]^2 + 8 r \[Delta]^3 + 
-   16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-     Sqrt[-4 r^2 + \[Gamma]^2 + 
-     2 \[Gamma] \[Delta] + \[Delta]^2], 1/(-2 \[Gamma]^2 Sqrt[-4 r^2 + \
-\[Gamma]^2 - 2 \[Gamma] \[Delta] + \[Delta]^2] - 
-   4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-     2 \[Gamma] \[Delta] + \[Delta]^2] + 
-   6 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 2 \[Gamma] \[Delta] + \[Delta]^2])]
+(2 r)/y3 (Sqrt[y3^2 + 4 r^2] + y3/2 + 2 r)*k + k*r - y3/2 - 2 r = 
+ r*Sqrt[k^2 + 1]
 
-Out[354]= \!\(
-TagBox[GridBox[{
-{"\[Piecewise]", GridBox[{
-{
-RowBox[{"y4", "==", 
-FractionBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "32"}], " ", 
-SuperscriptBox["r", "3"], " ", "\[Delta]"}], "+", 
-RowBox[{"8", " ", "r", " ", 
-SuperscriptBox["\[Gamma]", "2"], " ", "\[Delta]"}], "+", 
-RowBox[{"16", " ", "r", " ", "\[Gamma]", " ", 
-SuperscriptBox["\[Delta]", "2"]}], "+", 
-RowBox[{"8", " ", "r", " ", 
-SuperscriptBox["\[Delta]", "3"]}], "+", 
-RowBox[{"16", " ", "r", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "+", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}]}], 
-RowBox[{
-RowBox[{
-RowBox[{"-", "2"}], " ", 
-SuperscriptBox["\[Gamma]", "2"], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "-", 
-RowBox[{"4", " ", "\[Gamma]", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"6", " ", 
-SuperscriptBox["\[Delta]", "2"], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}]}]]}], 
-RowBox[{
-FractionBox["1", 
-RowBox[{
-RowBox[{
-RowBox[{"-", "2"}], " ", 
-SuperscriptBox["\[Gamma]", "2"], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "-", 
-RowBox[{"4", " ", "\[Gamma]", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"6", " ", 
-SuperscriptBox["\[Delta]", "2"], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}]}]], "!=", "0"}]},
-{
-RowBox[{
-RowBox[{"y4", " ", 
-RowBox[{"(", 
-RowBox[{
-RowBox[{
-RowBox[{"-", "2"}], " ", 
-SuperscriptBox["\[Gamma]", "2"], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "-", 
-RowBox[{"4", " ", "\[Gamma]", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}], "+", 
-RowBox[{"6", " ", 
-SuperscriptBox["\[Delta]", "2"], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "-", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}]}], ")"}]}], "==", 
-RowBox[{
-RowBox[{
-RowBox[{"-", "32"}], " ", 
-SuperscriptBox["r", "3"], " ", "\[Delta]"}], "+", 
-RowBox[{"8", " ", "r", " ", 
-SuperscriptBox["\[Gamma]", "2"], " ", "\[Delta]"}], "+", 
-RowBox[{"16", " ", "r", " ", "\[Gamma]", " ", 
-SuperscriptBox["\[Delta]", "2"]}], "+", 
-RowBox[{"8", " ", "r", " ", 
-SuperscriptBox["\[Delta]", "3"]}], "+", 
-RowBox[{"16", " ", "r", " ", "\[Delta]", " ", 
-SqrtBox[
-RowBox[{
-RowBox[{"-", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]], " ", 
-SqrtBox[
-RowBox[{
-RowBox[{
-RowBox[{"-", "4"}], " ", 
-SuperscriptBox["r", "2"]}], "+", 
-SuperscriptBox["\[Gamma]", "2"], "+", 
-RowBox[{"2", " ", "\[Gamma]", " ", "\[Delta]"}], "+", 
-SuperscriptBox["\[Delta]", "2"]}]]}]}]}], 
-TagBox["True",
-"PiecewiseDefault",
-AutoDelete->True]}
-},
-AllowedDimensions->{2, Automatic},
-Editable->True,
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.84]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}},
-Selectable->True]}
-},
-GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}},
-GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{1.}}},
-GridBoxSpacings->{"Columns" -> {
-Offset[0.27999999999999997`], {
-Offset[0.35]}, 
-Offset[0.27999999999999997`]}, "Rows" -> {
-Offset[0.2], {
-Offset[0.4]}, 
-Offset[0.2]}}],
-"Piecewise",
-DeleteWithContents->True,
-Editable->False,
-SelectWithContents->True,
-Selectable->False,
-StripWrapperBoxes->True]\)
+Substituting in the alternative for slope k:
 
-In[355]:= Simplify[(-32 r^3 \[Delta] + 8 r \[Gamma]^2 \[Delta] + 
-  16 r \[Gamma] \[Delta]^2 + 8 r \[Delta]^3 + 
-  16 r \[Delta] Sqrt[-r^2 + \[Delta]^2]
-    Sqrt[-4 r^2 + \[Gamma]^2 + 
-    2 \[Gamma] \[Delta] + \[Delta]^2])/(-2 \[Gamma]^2 Sqrt[-4 r^2 + \
-\[Gamma]^2 - 2 \[Gamma] \[Delta] + \[Delta]^2] - 
-  4 \[Gamma] \[Delta] Sqrt[-4 r^2 + \[Gamma]^2 - 
-    2 \[Gamma] \[Delta] + \[Delta]^2] + 
-  6 \[Delta]^2 Sqrt[-4 r^2 + \[Gamma]^2 - 2 \[Gamma] \[Delta] + \[Delta]^2])]
+(2 r)/y3 (Sqrt[y3^2 + 4 r^2] + y3/2 + 2 r)*\!\(TraditionalForm\`
+\*FractionBox[\(2*y3*\((y3 + 2  r)\)\), \(4  r*y3 + 8*
+\*SuperscriptBox[\(r\), \(2\)] + 4  r*
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)]\) + \!\(TraditionalForm\`
+\*FractionBox[\(2*y3*\((y3 + 2  r)\)\), \(4  r*y3 + 8*
+\*SuperscriptBox[\(r\), \(2\)] + 4  r*
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)]\)*r - y3/2 - 2 r = 
+ r*Sqrt[(\!\(TraditionalForm\`
+\*FractionBox[\(2*y3*\((y3 + 2  r)\)\), \(4  r*y3 + 8*
+\*SuperscriptBox[\(r\), \(2\)] + 4  r*
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)]\))^2 + 1]
 
-Out[355]= -((4 r \[Delta] (-4 r^2 + (\[Gamma] + \[Delta])^2 + 
-    2 Sqrt[-r^2 + \[Delta]^2] Sqrt[-4 r^2 + (\[Gamma] + \[Delta])^2]))/(
- Sqrt[-4 r^2 + (\[Gamma] - \[Delta])^2] (\[Gamma]^2 + 2 \[Gamma] \[Delta] - 
-    3 \[Delta]^2)))
+We want to solve for y3
 
-The above is an expression for y4 or Subscript[y, 4]
+lhs
+
+we will need to square the rhs, so let's square the lhs
+
+In[432]:= Clear[r, y3]
+Expand[((2 r)/y3 (Sqrt[y3^2 + 4 r^2] + y3/2 + 2 r)*\!\(TraditionalForm\`
+\*FractionBox[\(2*y3*\((y3 + 2  r)\)\), \(4  r*y3 + 8*
+\*SuperscriptBox[\(r\), \(2\)] + 4  r*
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)]\) + \!\(TraditionalForm\`
+\*FractionBox[\(2*y3*\((y3 + 2  r)\)\), \(4  r*y3 + 8*
+\*SuperscriptBox[\(r\), \(2\)] + 4  r*
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)]\)*r - y3/2 - 2 r)^2]
+
+rhs
+
+square the rhs
+
+In[434]:= Expand[(r*Sqrt[(\!\(TraditionalForm\`
+\*FractionBox[\(2*y3*\((y3 + 2  r)\)\), \(4  r*y3 + 8*
+\*SuperscriptBox[\(r\), \(2\)] + 4  r*
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] + 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)]\))^2 + 1])^2]
+
+Now, let's eliminate denominators:
+
+lhs
+
+multiply lhs by highest denominator to eliminate
+
+In[435]:= Simplify[((8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2)*(4 r^2 + 2 r y3 + y3^2/
+    4 + (512 r^6)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    768 r^5 y3)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    512 r^4 y3^2)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    192 r^3 y3^3)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    32 r^2 y3^4)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    256 r^5 Sqrt[
+     4 r^2 + y3^2])/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    384 r^4 y3 Sqrt[
+     4 r^2 + y3^2])/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    192 r^3 y3^2 Sqrt[
+     4 r^2 + y3^2])/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    32 r^2 y3^3 Sqrt[
+     4 r^2 + y3^2])/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 - (64 r^4)/(
+    8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2]) - (80 r^3 y3)/(
+    8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2]) - (32 r^2 y3^2)/(
+    8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2]) - (4 r y3^3)/(
+    8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2]) - (32 r^3 Sqrt[4 r^2 + y3^2])/(
+    8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2]) - (
+    24 r^2 y3 Sqrt[4 r^2 + y3^2])/(
+    8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2]) - (4 r y3^2 Sqrt[4 r^2 + y3^2])/(
+    8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2]))]
+
+In[436]:= ExpandAll[8 r^2 y3^2 (4 r^2 + 2 r (y3 + Sqrt[4 r^2 + y3^2]) + 
+    y3 (y3 + Sqrt[4 r^2 + y3^2]))]
+
+In[441]:= Collect[32 r^4 y3^2 + 16 r^3 y3^3 + 8 r^2 y3^4 + 
+  16 r^3 y3^2 Sqrt[4 r^2 + y3^2] + 8 r^2 y3^3 Sqrt[4 r^2 + y3^2], Sqrt[
+ 4 r^2 + y3^2]]
+
+rhs
+
+Now do the same to the rhs
+
+In[444]:= Simplify[(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2*(r^2 + (
+    16 r^4 y3^2)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    16 r^3 y3^3)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2 + (
+    4 r^2 y3^4)/(8 r^2 + 4 r y3 + 4 r Sqrt[4 r^2 + y3^2])^2)]
+
+In[445]:= ExpandAll[%]
+
+In[446]:= Collect[%, Sqrt[4 r^2 + y3^2]]
+
+lhs, collect radicals
+
+In[447]:= Collect[Expand[(*lhs radicals*)
+  Sqrt[4 r^2 + 
+     y3^2] (16 r^3 y3^2 + 8 r^2 y3^3) -(*rhs radicals*)(64 r^5 + 
+      32 r^4 y3) Sqrt[4 r^2 + y3^2]], Sqrt[4 r^2 + y3^2]]
+
+Out[447]= Sqrt[4 r^2 + y3^2] (-64 r^5 - 32 r^4 y3 + 16 r^3 y3^2 + 8 r^2 y3^3)
+
+rhs, collect other terms
+
+In[448]:= Expand[(*lhs terms*)(128 r^6 + 64 r^5 y3 + 48 r^4 y3^2 + 16 r^3 y3^3 + 
+    4 r^2 y3^4) -(*rhs terms*)(32 r^4 y3^2 + 16 r^3 y3^3 + 8 r^2 y3^4)]
+
+lhs
+
+square lhs to eliminate radical
+
+In[449]:= Expand[(Sqrt[
+   4 r^2 + y3^2] (-64 r^5 - 32 r^4 y3 + 16 r^3 y3^2 + 8 r^2 y3^3))^2]
+
+rhs
+
+also square the rhs
+
+In[450]:= Expand[(128 r^6 + 64 r^5 y3 + 16 r^4 y3^2 - 4 r^2 y3^4)^2]
+
+combine lhs and rhs (lhs-rhs)
+
+In[451]:= Expand[(*lhs*)(16384 r^12 + 16384 r^11 y3 - 4096 r^9 y3^3 - 2048 r^8 y3^4 - 
+    1024 r^7 y3^5 + 256 r^5 y3^7 + 64 r^4 y3^8) -(*rhs*)(16384 r^12 + 
+    16384 r^11 y3 + 8192 r^10 y3^2 + 2048 r^9 y3^3 - 768 r^8 y3^4 - 
+    512 r^7 y3^5 - 128 r^6 y3^6 + 16 r^4 y3^8)]
+
+Solve for y3
+
+In[189]:= NSolve[-8192 y3^2 - 6144 y3^3 - 1280 y3^4 - 512 y3^5 + 128 y3^6 + 256 y3^7 + 
+   48 y3^8 == 0, y3]
+
+In[5]:= (*r=1*)
+Clear[r]
+Solve[-8192 r^10 y3^2 - 6144 r^9 y3^3 - 1280 r^8 y3^4 - 512 r^7 y3^5 + 
+   128 r^6 y3^6 + 256 r^5 y3^7 + 48 r^4 y3^8 == 
+  0, y3](*Can we rewrite general solution to be manageable*)
+
+Simplified form for our polynomial:
+
+In[4]:= Cancel[(-8192 r^10 y3^2 - 6144 r^9 y3^3 - 1280 r^8 y3^4 - 512 r^7 y3^5 + 
+  128 r^6 y3^6 + 256 r^5 y3^7 + 48 r^4 y3^8)/(r^4*y3^2)]
+
+In[9]:= Clear[r, y3]
+-(512 r^6 + 384 r^5 y3 + 80 r^4 y3^2 + 32 r^3 y3^3 - 8 r^2 y3^4 - 16 r y3^5 - 
+   3 y3^6)
+
+In[5]:= Clear[r, y3]
+r = 1
+NSolve[512 r^6 + 384 r^5 y3 + 80 r^4 y3^2 + 32 r^3 y3^3 - 8 r^2 y3^4 - 
+   16 r y3^5 - 3 y3^6 == 0, y3]
+
+The following is the general solution for y3:
+
+In[13]:= r = 1
+N[-(r/3) + 
+  1/3 Sqrt[11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+    1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)] + 
+  1/2 Sqrt[(88 r^2)/9 + (1148 r^4)/(
+    9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)) - 
+    4/9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3) - (416 r^3)/(
+    9 Sqrt[11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+      1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)])]]
+
+In[15]:= Clear[r]
+Simplify[-(r/3) + 
+  1/3 Sqrt[11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+    1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)] + 
+  1/2 Sqrt[(88 r^2)/9 + (1148 r^4)/(
+    9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)) - 
+    4/9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3) - (416 r^3)/(
+    9 Sqrt[11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+      1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)])]]
+
+Tangent Critical F4, case (v)(revised 10/27/10),\[Gamma]=r, Subscript[\[ScriptL], def13L] supports C4 on RHS, Subscript[\[ScriptL], sep23] supports C4 on left (above)
+
+(*Originally from: Familyof5CirclesDisjointCorollary *)
+(*taken from: SupportSkProperty3DisksCollinearNondisjont *)
+(*\[Delta]=2/Sqrt[3];*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of x-coordinate of center of disk Subscript[C, \
+1] and Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+\[ScriptL]sep23Slope = y3/(
+  2 r + y3 + Sqrt[4 r^2 + y3^2]);(*slope of line lsep for C2/C3*)
+\[ScriptL]sep23int = \[ScriptL]sep23Slope*(-r) + y3/2;
+\[Gamma] = r(*\[Gamma] is x-coordinate of center of disk Subscript[C, \
+3]*)(*We use the absolute value for \[Gamma]*)
+Subscript[x, 4] = -((2 r)/
+   y3) (Sqrt[y3^2 + 4 r^2] + y3/2 + 
+    2 r)(*Subscript[x, 4] is x-coordinate of center of disk Subscript[C, \
+4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+y3 = 2.0875673686822096`;
+(*Subscript[s, 2]=(2r)/(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 2](x), hence the mnemonic.*)
+(*Subscript[s, 3]=(2r)/(Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 3](x), hence the mnemonic.*)
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,
+   y}*)];(*Three disks within horizontal slab between line Subscript[\
+\[ScriptL], 1] and line Subscript[\[ScriptL], 2]*)
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{Subscript[x, 4] - r, r}, {\[Gamma] + r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{Subscript[x, 4] - r, -r}, {\[Gamma] + r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -2 (r) - r}, {0, y3 + r}}](*,Black,(* support line Subscript[m, 
+    3], vertical*)Line[{{\[Delta]+r,-(3r)},{\[Delta]+r,(3r)}}]*)}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r, 
+     0}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+(3r)/2,-3r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def13L]*)
+    Line[{{Subscript[x, 4] - r/2, 
+       y3/(2 r)*(Subscript[x, 4] - r/2) + (Sqrt[y3^2 + 4 r^2] + y3)/
+        2}, {\[Gamma], y3/(2 r)*(\[Gamma]) + (Sqrt[y3^2 + 4 r^2] + y3)/2}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep23]*)
+    Line[{{Subscript[x, 4] - 
+        r, \[ScriptL]sep23Slope*(Subscript[x, 4] - 
+           r) + \[ScriptL]sep23int}, {\[Delta] + 
+        r, \[ScriptL]sep23Slope*(\[Delta] + r) + \[ScriptL]sep23int}}] }];
+
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def13L], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] - r/2, 
+     y3/(2 r)*(Subscript[x, 4] - r/2) + (Sqrt[y3^2 + 4 r^2] + y3)/2}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep23], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] - 
+      r, \[ScriptL]sep23Slope*(Subscript[x, 4] - r) + \[ScriptL]sep23int}, {1,
+      0}]];(*{Subscript[x, 4]-r-\[CurlyEpsilon],k*(Subscript[x, 4]-r-\
+\[CurlyEpsilon])-k*\[Delta]/2+r}*)
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], y3}], Point[{Subscript[x, 4], -2 r}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], y3}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], -2 r}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], y3}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 
+     4], -2 r}, {1, 0}]];
+
+(* Label: CriticalFamiliesSize4Tangentvi *)
+
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21]
+
+ 
+
+slope for ellsep23
+
+In[451]:= Clear[r,y3]
+Simplify[2/(1+2/y3 (Sqrt[y3^2+4r^2]+y3/2+2r))]
+
+Alternative description for y3
+
+In[1]:= Expand[((2 r + \[CurlyEpsilon])/(
+   2 r + 2 r + \[CurlyEpsilon] + Sqrt[
+    4 r^2 + (2 r + \[CurlyEpsilon])^2]))^2 == (\!\(TraditionalForm\`
+\*SqrtBox[\(
+\*SuperscriptBox[\((2  r + \[CurlyEpsilon])\), \(2\)] - 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)/(2 r))^2]
+
+In[3]:= Simplify[MultiplySides[(
+    4 r^2)/(4 r + \[CurlyEpsilon] + Sqrt[
+      4 r^2 + (2 r + \[CurlyEpsilon])^2])^2 + (
+    4 r \[CurlyEpsilon])/(4 r + \[CurlyEpsilon] + Sqrt[
+      4 r^2 + (2 r + \[CurlyEpsilon])^2])^2 + \[CurlyEpsilon]^2/(4 r + \
+\[CurlyEpsilon] + Sqrt[
+      4 r^2 + (2 r + \[CurlyEpsilon])^2])^2 == \[CurlyEpsilon]/
+    r + \[CurlyEpsilon]^2/(4 r^2), 
+  4 r^2*(4 r + \[CurlyEpsilon] + Sqrt[4 r^2 + (2 r + \[CurlyEpsilon])^2])^2]]
+
+In[4]:= ExpandAll[4 r^2 (2 r + \[CurlyEpsilon])^2 == \[CurlyEpsilon] (4 r + \
+\[CurlyEpsilon]) (4 r + \[CurlyEpsilon] + Sqrt[
+     8 r^2 + 4 r \[CurlyEpsilon] + \[CurlyEpsilon]^2])^2]
+
+In[6]:= Collect[16 r^4 + 16 r^3 \[CurlyEpsilon] + 4 r^2 \[CurlyEpsilon]^2 == 
+  96 r^3 \[CurlyEpsilon] + 72 r^2 \[CurlyEpsilon]^2 + 
+   20 r \[CurlyEpsilon]^3 + 2 \[CurlyEpsilon]^4 + 
+   32 r^2 \[CurlyEpsilon] Sqrt[
+    8 r^2 + 4 r \[CurlyEpsilon] + \[CurlyEpsilon]^2] + 
+   16 r \[CurlyEpsilon]^2 Sqrt[
+    8 r^2 + 4 r \[CurlyEpsilon] + \[CurlyEpsilon]^2] + 
+   2 \[CurlyEpsilon]^3 Sqrt[
+    8 r^2 + 4 r \[CurlyEpsilon] + \[CurlyEpsilon]^2], Sqrt[
+ 8 r^2 + 4 r \[CurlyEpsilon] + \[CurlyEpsilon]^2]]
+
+In[7]:= AddSides[16 r^4 + 16 r^3 \[CurlyEpsilon] + 4 r^2 \[CurlyEpsilon]^2 == 
+  96 r^3 \[CurlyEpsilon] + 72 r^2 \[CurlyEpsilon]^2 + 
+   20 r \[CurlyEpsilon]^3 + 2 \[CurlyEpsilon]^4 + 
+   Sqrt[8 r^2 + 
+     4 r \[CurlyEpsilon] + \[CurlyEpsilon]^2] (32 r^2 \[CurlyEpsilon] + 
+      16 r \[CurlyEpsilon]^2 + 
+      2 \[CurlyEpsilon]^3), -(96 r^3 \[CurlyEpsilon] + 
+    72 r^2 \[CurlyEpsilon]^2 + 20 r \[CurlyEpsilon]^3 + 2 \[CurlyEpsilon]^4)]
+
+In[8]:= Expand[(16 r^4 - 80 r^3 \[CurlyEpsilon] - 68 r^2 \[CurlyEpsilon]^2 - 
+    20 r \[CurlyEpsilon]^3 - 2 \[CurlyEpsilon]^4)^2 == (Sqrt[
+    8 r^2 + 4 r \[CurlyEpsilon] + \[CurlyEpsilon]^2] (32 r^2 \[CurlyEpsilon] \
++ 16 r \[CurlyEpsilon]^2 + 2 \[CurlyEpsilon]^3))^2]
+
+In[9]:= AddSides[256 r^8 - 2560 r^7 \[CurlyEpsilon] + 4224 r^6 \[CurlyEpsilon]^2 + 
+   10240 r^5 \[CurlyEpsilon]^3 + 7760 r^4 \[CurlyEpsilon]^4 + 
+   3040 r^3 \[CurlyEpsilon]^5 + 672 r^2 \[CurlyEpsilon]^6 + 
+   80 r \[CurlyEpsilon]^7 + 4 \[CurlyEpsilon]^8 == 
+  8192 r^6 \[CurlyEpsilon]^2 + 12288 r^5 \[CurlyEpsilon]^3 + 
+   8192 r^4 \[CurlyEpsilon]^4 + 3072 r^3 \[CurlyEpsilon]^5 + 
+   672 r^2 \[CurlyEpsilon]^6 + 80 r \[CurlyEpsilon]^7 + 
+   4 \[CurlyEpsilon]^8, -(8192 r^6 \[CurlyEpsilon]^2 + 
+    12288 r^5 \[CurlyEpsilon]^3 + 8192 r^4 \[CurlyEpsilon]^4 + 
+    3072 r^3 \[CurlyEpsilon]^5 + 672 r^2 \[CurlyEpsilon]^6 + 
+    80 r \[CurlyEpsilon]^7 + 4 \[CurlyEpsilon]^8)]
+
+In[10]:= NSolve[256 r^8 - 2560 r^7 \[CurlyEpsilon] - 3968 r^6 \[CurlyEpsilon]^2 - 
+   2048 r^5 \[CurlyEpsilon]^3 - 432 r^4 \[CurlyEpsilon]^4 - 
+   32 r^3 \[CurlyEpsilon]^5 == 0, \[CurlyEpsilon]]
+
+Derive value for y3 based on two values of k
+
+The slope for ellsep23 from parallel to o3, o4
+
+k = y3/(2 r + y3 + Sqrt[4 r^2 + y3^2])
+
+the slope for the line from distance vector lemma
+
+k = \!\(TraditionalForm\`
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] - 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)/(2 r)
+
+Set k=k and square both sides, eliminate radical rhs
+
+In[513]:= Clear[r, y3]
+Expand[(y3/(2 r + y3 + Sqrt[4 r^2 + y3^2]))^2 == (\!\(TraditionalForm\`
+\*SqrtBox[\(
+\*SuperscriptBox[\(y3\), \(2\)] - 4 
+\*SuperscriptBox[\(r\), \(2\)]\)]\)/(2 r))^2]
+
+multiply clear fractions
+
+In[516]:= MultiplySides[y3^2/(2 r + y3 + Sqrt[4 r^2 + y3^2])^2 == -1 + y3^2/(4 r^2), 
+ 4 r^2 (2 r + y3 + Sqrt[4 r^2 + y3^2])^2]
+
+In[517]:= ExpandAll[4 r^2 y3^2 == 
+  4 r^2 (-1 + y3^2/(4 r^2)) (2 r + y3 + Sqrt[4 r^2 + y3^2])^2]
+
+In[518]:= Collect[4 r^2 y3^2 == -32 r^4 - 16 r^3 y3 + 4 r y3^3 + 2 y3^4 - 
+   16 r^3 Sqrt[4 r^2 + y3^2] - 8 r^2 y3 Sqrt[4 r^2 + y3^2] + 
+   4 r y3^2 Sqrt[4 r^2 + y3^2] + 2 y3^3 Sqrt[4 r^2 + y3^2], Sqrt[4 r^2 + y3^2]
+ ]
+
+Isolate the radicals on one side
+
+In[519]:= AddSides[4 r^2 y3^2 == -32 r^4 - 16 r^3 y3 + 4 r y3^3 + 2 y3^4 + 
+   Sqrt[4 r^2 + y3^2] (-16 r^3 - 8 r^2 y3 + 4 r y3^2 + 2 y3^3), -(-32 r^4 - 
+    16 r^3 y3 + 4 r y3^3 + 2 y3^4)]
+
+square to eliminate radical
+
+In[520]:= Expand[(32 r^4 + 16 r^3 y3 + 4 r^2 y3^2 - 4 r y3^3 - 2 y3^4)^2 == (Sqrt[
+    4 r^2 + y3^2] (-16 r^3 - 8 r^2 y3 + 4 r y3^2 + 2 y3^3))^2]
+
+combine on lhs
+
+In[521]:= AddSides[1024 r^8 + 1024 r^7 y3 + 512 r^6 y3^2 - 128 r^5 y3^3 - 
+   240 r^4 y3^4 - 96 r^3 y3^5 + 16 r y3^7 + 4 y3^8 == 
+  1024 r^8 + 1024 r^7 y3 - 256 r^5 y3^3 - 128 r^4 y3^4 - 64 r^3 y3^5 + 
+   16 r y3^7 + 
+   4 y3^8, -(1024 r^8 + 1024 r^7 y3 - 256 r^5 y3^3 - 128 r^4 y3^4 - 
+    64 r^3 y3^5 + 16 r y3^7 + 4 y3^8)]
+
+In[522]:= Clear[r, y3]
+Collect[512 r^6 y3^2 + 128 r^5 y3^3 - 112 r^4 y3^4 - 32 r^3 y3^5, y3]
+
+In[524]:= Clear[r, y3]
+r = 1
+NSolve[512 r^6 y3^2 + 128 r^5 y3^3 - 112 r^4 y3^4 - 32 r^3 y3^5 == 0, y3]
+
+Simplify the polynomial
+
+In[11]:= Cancel[(512 r^6 y3^2 + 128 r^5 y3^3 - 112 r^4 y3^4 - 32 r^3 y3^5)/(r^3*y3^2)]
+
+In[12]:= -(32 r^3 + 8 r^2 y3 - 7 r y3^2 - 2 y3^3)
+
+In[3]:= Clear[r, y3]
+(*r=1*)
+Solve[512 r^6 y3^2 + 128 r^5 y3^3 - 112 r^4 y3^4 - 32 r^3 y3^5 == 
+  0, y3, PositiveReals]
+
+In[6]:= Solve[-32 r^3 - 8 r^2 y3 + 7 r y3^2 + 2 y3^3 == 0, y3]
+
+Tangent Critical F4, case (vi)(revised 10/27/20),\[Gamma]=r, Subscript[\[ScriptL], def13L] supports C4 on RHS, Subscript[\[ScriptL], sep] supports C4 on right (from below), Subscript[\[ScriptL], 1] supports C4
+
+In[95]:= (*Originally from: Familyof5CirclesDisjointCorollary *)
+(*taken from: SupportSkProperty3DisksCollinearNondisjont *)
+(*\[Delta]=2/Sqrt[3];*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of x-coordinate of center of disk Subscript[C, \
+1] and Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+\[ScriptL]sep23Slope = -(
+   y3/(-2 r + y3 + Sqrt[
+    4 r^2 + y3^2]))(*(-2*y3*(y3+2r))/(4r*y3+8r^2+4rSqrt[y3^2+4r^2])*);(*-(y3+\
+2r)/(r+(2r)/y3(Sqrt[y3^2+4r^2]+y3/2+2r))*)(*slope of line lsep for C2/C3*)
+\[ScriptL]sep23int = \[ScriptL]sep23Slope*(-r) + y3/2;
+\[Gamma] = r(*\[Gamma] is x-coordinate of center of disk Subscript[C, \
+3]*)(*We use the absolute value for \[Gamma]*)
+Subscript[x, 4] = 
+ N[-((2 r)/y3) (Sqrt[y3^2 + 4 r^2] + y3/2 - 
+     2 r)](*Subscript[x, 4] is x-coordinate of center of disk Subscript[C, \
+4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+y3 = 2.4185451392580335` (*3.169022229424176`\[VeryThinSpace] not correct, \
+but is real>0*);
+(*Subscript[s, 2]=(2r)/(Sqrt[t+\[Delta]+2r]Sqrt[t+\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 2](x), hence the mnemonic.*)
+(*Subscript[s, 3]=(2r)/(Sqrt[t-\[Delta]+2r]Sqrt[t-\[Delta]-2r]);*) (*This is \
+the slope of Subscript[m, 3](x), hence the mnemonic.*)
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,
+   y}*)];(*Three disks within horizontal slab between line Subscript[\
+\[ScriptL], 1] and line Subscript[\[ScriptL], 2]*)
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{Subscript[x, 4] - r, r}, {\[Gamma] + r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{Subscript[x, 4] - r, -r}, {\[Gamma] + r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -2 (r) - r}, {0, y3 + r}}](*,Black,(* support line Subscript[m, 
+    3], vertical*)Line[{{\[Delta]+r,-(3r)},{\[Delta]+r,(3r)}}]*)}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r, 
+     0}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+(3r)/2,-3r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def13L]*)
+    Line[{{Subscript[x, 4] - r, 
+       y3/(2 r)*(Subscript[x, 4] - r) + (Sqrt[y3^2 + 4 r^2] + y3)/
+        2}, {\[Gamma], y3/(2 r)*(\[Gamma]) + (Sqrt[y3^2 + 4 r^2] + y3)/2}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep23]*)
+    Line[{{Subscript[x, 4] - r/
+        2, \[ScriptL]sep23Slope*(Subscript[x, 4] - r/
+           2) + \[ScriptL]sep23int}, {\[Delta] + 
+        r, \[ScriptL]sep23Slope*(\[Delta] + r) + \[ScriptL]sep23int}}] }];
+
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def13L], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4] - r,
+      y3/(2 r)*(Subscript[x, 4] - r) + (Sqrt[y3^2 + 4 r^2] + y3)/2}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep23], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] - r/
+      2, \[ScriptL]sep23Slope*(Subscript[x, 4] - r/
+         2) + \[ScriptL]sep23int}, {1, 
+     0}]];(*{Subscript[x, 4]-r-\[CurlyEpsilon],k*(Subscript[x, 4]-r-\
+\[CurlyEpsilon])-k*\[Delta]/2+r}*)
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], y3}], Point[{Subscript[x, 4], 2 r}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], y3}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], 2 r}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], y3}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4], 
+     2 r}, {1, 0}]];
+
+(* Label: CriticalFamiliesSize4Tangentv *)(*see handwritten pages 11/20/19 \
+for this labeling scheme *)
+
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21]
+
+Solving for y3 given two values for the slope of Subscript[\[ScriptL], sep23]
+
+We have an equation for k
+
+(-2 r)/y3 (Sqrt[y3^2 + 4 r^2] + y3/2 - 2 r)*k - k*r + y3/2 - 2 r = 
+ r*Sqrt[k^2 + 1]
+
+We have another value for k derived as a definite support
+
+k = -(y3/(-2 r + y3 + Sqrt[4 r^2 + y3^2]))
+
+Substitute in the value for k into the equation
+
+In[205]:= Clear[r, y3, k]
+{(-2 r)/y3 (Sqrt[y3^2 + 4 r^2] + y3/2 - 2 r)*k - k*r + y3/2 - 2 r == 
+   r*Sqrt[k^2 + 1]} /. k -> -(y3/(-2 r + y3 + Sqrt[4 r^2 + y3^2]))
+
+Square both sides to eliminate radical on rhs
+
+In[207]:= Expand[(-2 r + y3/2 + (r y3)/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) + (
+    2 r (-2 r + y3/2 + Sqrt[4 r^2 + y3^2]))/(-2 r + y3 + Sqrt[
+     4 r^2 + y3^2]))^2 == (r Sqrt[
+    1 + y3^2/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2])^2]
+
+In[208]:= MultiplySides[
+ 4 r^2 - 2 r y3 + y3^2/4 + (32 r^4)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 - (
+   16 r^3 y3)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 + (
+   8 r^2 y3^2)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 - (
+   16 r^3 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 + (
+   8 r^2 y3 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 + (
+   16 r^3)/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) - (
+   12 r^2 y3)/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) + (
+   2 r y3^2)/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) - (
+   8 r^2 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) + (
+   2 r y3 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) == 
+  r^2 + (r^2 y3^2)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2, (-2 r + y3 + Sqrt[
+   4 r^2 + y3^2])^2]
+
+In[209]:= Cancel[(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 (4 r^2 - 2 r y3 + y3^2/4 + (
+     32 r^4)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 - (
+     16 r^3 y3)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 + (
+     8 r^2 y3^2)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 - (
+     16 r^3 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 + (
+     8 r^2 y3 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2 + (
+     16 r^3)/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) - (
+     12 r^2 y3)/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) + (
+     2 r y3^2)/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) - (
+     8 r^2 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2]) + (
+     2 r y3 Sqrt[4 r^2 + y3^2])/(-2 r + y3 + Sqrt[4 r^2 + y3^2])) == (-2 r + 
+     y3 + Sqrt[4 r^2 + y3^2])^2 (r^2 + (
+     r^2 y3^2)/(-2 r + y3 + Sqrt[4 r^2 + y3^2])^2)]
+
+In[210]:= Collect[1/2 (4 r^2 y3^2 - 2 r y3^3 + y3^4 - 2 r y3^2 Sqrt[4 r^2 + y3^2] + 
+     y3^3 Sqrt[4 r^2 + y3^2]) == -r^2 (-8 r^2 + 4 r y3 - 3 y3^2 + 
+     4 r Sqrt[4 r^2 + y3^2] - 2 y3 Sqrt[4 r^2 + y3^2]), Sqrt[4 r^2 + y3^2]]
+
+In[211]:= AddSides[1/2 Sqrt[4 r^2 + y3^2] (-2 r y3^2 + y3^3) + 
+   1/2 (4 r^2 y3^2 - 2 r y3^3 + y3^4) == -r^2 (-8 r^2 + 4 r y3 - 3 y3^2) - 
+   r^2 (4 r - 2 y3) Sqrt[4 r^2 + y3^2], -(1/2) Sqrt[
+   4 r^2 + y3^2] (-2 r y3^2 + y3^3) + r^2 (-8 r^2 + 4 r y3 - 3 y3^2)]
+
+In[212]:= Collect[r^2 (-8 r^2 + 4 r y3 - 3 y3^2) + 
+   1/2 (4 r^2 y3^2 - 2 r y3^3 + y3^4) == -r^2 (4 r - 2 y3) Sqrt[
+    4 r^2 + y3^2] - 1/2 Sqrt[4 r^2 + y3^2] (-2 r y3^2 + y3^3), Sqrt[
+ 4 r^2 + y3^2]]
+
+Square both sides to eliminate radical
+
+In[213]:= Expand[(r^2 (-8 r^2 + 4 r y3 - 3 y3^2) + 
+    1/2 (4 r^2 y3^2 - 2 r y3^3 + y3^4))^2 == (Sqrt[
+    4 r^2 + y3^2] (-4 r^3 + 2 r^2 y3 + r y3^2 - y3^3/2))^2]
+
+Collect everything to one side
+
+In[214]:= AddSides[64 r^8 - 64 r^7 y3 + 32 r^6 y3^2 + 8 r^5 y3^3 - 15 r^4 y3^4 + 
+   6 r^3 y3^5 - r y3^7 + y3^8/4 == 
+  64 r^8 - 64 r^7 y3 + 16 r^5 y3^3 - 8 r^4 y3^4 + 4 r^3 y3^5 - r y3^7 + y3^8/
+   4, -(64 r^8 - 64 r^7 y3 + 16 r^5 y3^3 - 8 r^4 y3^4 + 4 r^3 y3^5 - r y3^7 + 
+    y3^8/4)]
+
+In[215]:= NSolve[32 r^6 y3^2 - 8 r^5 y3^3 - 7 r^4 y3^4 + 2 r^3 y3^5 == 0, y3]
+
+In[12]:= Clear[r, y3]
+r = 1;
+NSolve[32 r^6 y3^2 - 8 r^5 y3^3 - 7 r^4 y3^4 + 2 r^3 y3^5 == 0 && r > 0, y3]
+N[(7 r)/6 + (97 (-1)^(5/6) (1 - I Sqrt[3]) r)/(
+  12 (881 I + 24 Sqrt[237])^(1/3)) - 
+  1/12 (-1)^(1/6) (1 + I Sqrt[3]) (881 I + 24 Sqrt[237])^(1/3) r]
+
+2.4185451392580335` + 2.220446049250313`*^-16 I
+Factor[881]
+881^2 + 24^2*237
+881
+912673
+PrimeQ[881]
+True
+june
+tegan
+N[(-1)^(1/6)]
+0.8660254037844387` + 0.49999999999999994` I
+N[(-1)^(5/6)]
+-0.8660254037844387` + 0.49999999999999994` I
+
+Plot the graph to verify real roots
+
+In[1]:= Clear[r, y3, x]
+32 r^6 y3^2 - 8 r^5 y3^3 - 7 r^4 y3^4 + 2 r^3 y3^5 /. y3 -> x
+
+In[3]:= 32 r^6 x^2 - 8 r^5 x^3 - 7 r^4 x^4 + 2 r^3 x^5 /. r -> 1
+
+In[4]:= Plot[32 x^2 - 8 x^3 - 7 x^4 + 2 x^5, {x, 0, 5}]
+
+Intermediate value theorem with r=1
+
+In[5]:= 32 x^2 - 8 x^3 - 7 x^4 + 2 x^5 /. x -> 2
+
+In[6]:= 32 x^2 - 8 x^3 - 7 x^4 + 2 x^5 /. x -> 3
+
+With the positive and negative values of p(x) at x=2 and x=3, we see that the polynomial has a real root in the interval [2,3]
+
+Attempt to rewrite expression (solution) symbolically, not numerically
+
+In[4]:= Clear[r, y3]
+Solve[32 r^6 y3^2 - 8 r^5 y3^3 - 7 r^4 y3^4 + 2 r^3 y3^5 == 
+  0, y3, PositiveReals]
+
+In[197]:= Clear[r, y3]
+Solve[32 r^6 y3^2 - 8 r^5 y3^3 - 7 r^4 y3^4 + 2 r^3 y3^5 == 0, y3]
+
+In[199]:= Clear[r]
+Simplify[(7 r)/6 + (97 (-1)^(5/6) (1 - I Sqrt[3]) r)/(
+  12 (881 I + 24 Sqrt[237])^(1/3)) - 
+  1/12 (-1)^(1/6) (1 + I Sqrt[3]) (881 I + 24 Sqrt[237])^(1/3) r]
+
+Together[1/
+  6 (7 + (97 I)/(881 I + 24 Sqrt[237])^(1/3) - 
+    I (881 I + 24 Sqrt[237])^(
+     1/3)) r](*How do we rewrite this as a real expression?, especially since \
+r>0*)
+
+In[2]:= (*Clear[r,y3]*)
+r = 1
+NSolve[32 r^6 y3^2 - 8 r^5 y3^3 - 7 r^4 y3^4 + 2 r^3 y3^5 == 
+  0, y3, PositiveReals]
+
+r = 1
+N[Root[32 r^3 - 8 r^2 #1 - 7 r #1^2 + 2 #1^3 &, 2]]
+
+In[3]:= Clear[r]
+(*r=1*)
+Solve[32 r^3 - 8 r^2 x - 7 r x^2 + 2 x^3 == 0, x]
+
+In[13]:= r = 1
+N[1/6 (7 r - (97 (-1)^(5/6) r)/(881 I + 24 Sqrt[237])^(
+    1/3) + (-1)^(1/6) (881 I + 24 Sqrt[237])^(1/3) r)]
+
+In[15]:= N[(7 r)/6 + (97 (-1)^(5/6) (1 + I Sqrt[3]) r)/(
+  12 (881 I + 24 Sqrt[237])^(1/3)) - 
+  1/12 (-1)^(1/6) (1 - I Sqrt[3]) (881 I + 24 Sqrt[237])^(1/3) r]
+
+In[31]:= N[97/Surd[912673, 6] - Surd[912673, 6]]
+
+In[26]:= 1.173694012766495` + Pi
+
+In[25]:= N[(3*Pi)/2]
+
+In[16]:= N[(7 r)/6 + (97 (-1)^(5/6) (1 - I Sqrt[3]) r)/(
+  12 (881 I + 24 Sqrt[237])^(1/3)) - 
+  1/12 (-1)^(1/6) (1 + I Sqrt[3]) (881 I + 24 Sqrt[237])^(1/3) r]
+
+In[7]:= Clear[r]
+r = 1
+N[r/6*(7 - 97/Surd[912673, 6] - Surd[912673, 6])]
+
+In[40]:= Clear[r]
+r = 1;
+\[Phi] = ArcTan[881/(24*Sqrt[237])];
+N[r/6*(7 + Sin[\[Phi]/3]*(97/Surd[912673, 6] + Surd[912673, 6]))]
+
+
+
+Tangent Critical F4, case (vii) , Subscript[\[ScriptL], def13R] supports C4 on LHS, Subscript[\[ScriptL], sep23RL] supports C4 on left
+
+In[125]:= 
+(*taken from: CriticalFamiliesSize4Overlapping *)(*Compare with Case A(i)*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of center of disk Subscript[C, 1] and \
+Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+
+\[ScriptL]sep23Slope = -(Sqrt[y3^2 - 4 r^2]/(
+   2 r));(*slope of line lsep for C2/C3*)
+\[ScriptL]sep23int = \[ScriptL]sep23Slope*(-r) + y3/2;
+\[ScriptL]def13RSlope = y3/(2 r);(*slope of line lsep for C2/C3*)
+\[ScriptL]def13Rint = (-Sqrt[y3^2 + 4 r^2] + y3)/2;
+t = (2/3) r + \[Delta]; (*t must be in the bound \[Delta]+2r < t < 3\[Delta] \
+*)(*center x-  coordinate for C3*)
+\[Gamma] = 
+  r;(*\[Gamma] is x-coordinate of center of disk Subscript[C, 3]*)(*We use \
+the absolute value for \[Gamma]*)
+y3 = 4.152865293655491`;
+Subscript[x, 
+  4] = (2 r)/
+   y3 (Sqrt[y3^2 + 4 r^2] + 2 r - y3/
+     2);(*Subscript[x, 4] is x-coordinate of center of disk Subscript[C, \
+4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+y4 = 2 r
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,y}*)];
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{-r - r, r}, {\[Gamma] + 2 r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{-r - r, -r}, {\[Gamma] + 2 r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -(2 r)}, {0, (5 r)}}]}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r/2,
+      r/3}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+2r+b/2,-2r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def13R]*)
+    Line[{{-r, \[ScriptL]def13RSlope*(-r) + \[ScriptL]def13Rint}, {Subscript[
+        x, 4] + r/
+        4, \[ScriptL]def13RSlope*(Subscript[x, 4] + r/
+           4) + \[ScriptL]def13Rint}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep23]*)
+    Line[{{-r, \[ScriptL]sep23Slope*(-r) + \[ScriptL]sep23int}, {Subscript[x, 
+        4] + r/4, \[ScriptL]sep23Slope*(Subscript[x, 4] + r/
+           4) + \[ScriptL]sep23int}}] }];
+
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def13R], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> 
+      "Courier New"], {-r, \[ScriptL]def13RSlope*(-r) + \[ScriptL]def13Rint}, \
+{1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep23RL], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> 
+      "Courier New"], {-r, \[ScriptL]sep23Slope*(-r) + \[ScriptL]sep23int}, \
+{1, 0}]];
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], y3}], Point[{Subscript[x, 4], y4}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], y3}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], y4}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], y3}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4], 
+     y4}, {1, 0}]];
+g22 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 1], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, r}, {1, 0}]];
+g23 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 2], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, -r}, {1, 0}]];
+
+(* Label: CriticalFamiliesSize4Tangentvii *)(*see handwritten pages for this \
+labeling scheme *)
+
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21, g22, g23]
+
+ 
+
+ 
+
+Solve for y3
+
+The following equation contains  the two expressions for the slope of ellsep23
+
+In[1]:= Clear[r, y3, \[Gamma]]
+PowerExpand[
+ MultiplySides[(y3 (2 r - y3))/(
+   2 r (Sqrt[y3^2 + 4 r^2] + 2 r - y3/2) - \[Gamma]*y3) == -Sqrt[
+     y3^2 - 4 r^2]/(2 r), 
+  2 r (2 r (Sqrt[y3^2 + 4 r^2] + 2 r - y3/2) - \[Gamma]*y3)]]
+
+
+In[3]:= Expand[(2 r (2 r - y3) y3)^2 == (-Sqrt[-4 r^2 + 
+      y3^2] (2 r (2 r - y3/2 + Sqrt[4 r^2 + y3^2]) - y3 \[Gamma]))^2]
+
+In[4]:= Collect[16 r^4 y3^2 - 16 r^3 y3^3 + 4 r^2 y3^4 == -128 r^6 + 32 r^5 y3 + 
+   12 r^4 y3^2 - 8 r^3 y3^3 + 5 r^2 y3^4 - 64 r^5 Sqrt[4 r^2 + y3^2] + 
+   16 r^4 y3 Sqrt[4 r^2 + y3^2] + 16 r^3 y3^2 Sqrt[4 r^2 + y3^2] - 
+   4 r^2 y3^3 Sqrt[4 r^2 + y3^2] + 32 r^4 y3 \[Gamma] - 8 r^3 y3^2 \[Gamma] - 
+   8 r^2 y3^3 \[Gamma] + 2 r y3^4 \[Gamma] + 
+   16 r^3 y3 Sqrt[4 r^2 + y3^2] \[Gamma] - 
+   4 r y3^3 Sqrt[4 r^2 + y3^2] \[Gamma] - 4 r^2 y3^2 \[Gamma]^2 + 
+   y3^4 \[Gamma]^2, Sqrt[4 r^2 + y3^2]]
+
+In[5]:= AddSides[16 r^4 y3^2 - 16 r^3 y3^3 + 4 r^2 y3^4 == -128 r^6 + 32 r^5 y3 + 
+   12 r^4 y3^2 - 8 r^3 y3^3 + 5 r^2 y3^4 + 32 r^4 y3 \[Gamma] - 
+   8 r^3 y3^2 \[Gamma] - 8 r^2 y3^3 \[Gamma] + 2 r y3^4 \[Gamma] - 
+   4 r^2 y3^2 \[Gamma]^2 + y3^4 \[Gamma]^2 + 
+   Sqrt[4 r^2 + 
+     y3^2] (-64 r^5 + 16 r^4 y3 + 16 r^3 y3^2 - 4 r^2 y3^3 + 
+      16 r^3 y3 \[Gamma] - 4 r y3^3 \[Gamma]), -(-128 r^6 + 32 r^5 y3 + 
+    12 r^4 y3^2 - 8 r^3 y3^3 + 5 r^2 y3^4 + 32 r^4 y3 \[Gamma] - 
+    8 r^3 y3^2 \[Gamma] - 8 r^2 y3^3 \[Gamma] + 2 r y3^4 \[Gamma] - 
+    4 r^2 y3^2 \[Gamma]^2 + y3^4 \[Gamma]^2)]
+
+In[6]:= Expand[(128 r^6 - 32 r^5 y3 + 4 r^4 y3^2 - 8 r^3 y3^3 - r^2 y3^4 - 
+    32 r^4 y3 \[Gamma] + 8 r^3 y3^2 \[Gamma] + 8 r^2 y3^3 \[Gamma] - 
+    2 r y3^4 \[Gamma] + 4 r^2 y3^2 \[Gamma]^2 - y3^4 \[Gamma]^2)^2 == (Sqrt[
+    4 r^2 + y3^2] (-64 r^5 + 16 r^4 y3 + 16 r^3 y3^2 - 4 r^2 y3^3 + 
+      16 r^3 y3 \[Gamma] - 4 r y3^3 \[Gamma]))^2]
+
+Combine it all
+
+In[7]:= AddSides[16384 r^12 - 8192 r^11 y3 + 2048 r^10 y3^2 - 2304 r^9 y3^3 + 
+   272 r^8 y3^4 + 56 r^6 y3^6 + 16 r^5 y3^7 + r^4 y3^8 - 
+   8192 r^10 y3 \[Gamma] + 4096 r^9 y3^2 \[Gamma] + 1280 r^8 y3^3 \[Gamma] - 
+   448 r^7 y3^4 \[Gamma] + 128 r^6 y3^5 \[Gamma] - 160 r^5 y3^6 \[Gamma] + 
+   16 r^4 y3^7 \[Gamma] + 4 r^3 y3^8 \[Gamma] + 2048 r^8 y3^2 \[Gamma]^2 - 
+   768 r^7 y3^3 \[Gamma]^2 - 672 r^6 y3^4 \[Gamma]^2 + 
+   256 r^5 y3^5 \[Gamma]^2 + 16 r^4 y3^6 \[Gamma]^2 - 
+   16 r^3 y3^7 \[Gamma]^2 + 6 r^2 y3^8 \[Gamma]^2 - 256 r^6 y3^3 \[Gamma]^3 + 
+   64 r^5 y3^4 \[Gamma]^3 + 128 r^4 y3^5 \[Gamma]^3 - 
+   32 r^3 y3^6 \[Gamma]^3 - 16 r^2 y3^7 \[Gamma]^3 + 4 r y3^8 \[Gamma]^3 + 
+   16 r^4 y3^4 \[Gamma]^4 - 8 r^2 y3^6 \[Gamma]^4 + y3^8 \[Gamma]^4 == 
+  16384 r^12 - 8192 r^11 y3 - 3072 r^10 y3^2 + 2048 r^9 y3^3 - 
+   1280 r^8 y3^4 + 512 r^7 y3^5 + 192 r^6 y3^6 - 128 r^5 y3^7 + 16 r^4 y3^8 - 
+   8192 r^10 y3 \[Gamma] + 2048 r^9 y3^2 \[Gamma] + 2048 r^8 y3^3 \[Gamma] - 
+   512 r^7 y3^4 \[Gamma] + 512 r^6 y3^5 \[Gamma] - 128 r^5 y3^6 \[Gamma] - 
+   128 r^4 y3^7 \[Gamma] + 32 r^3 y3^8 \[Gamma] + 1024 r^8 y3^2 \[Gamma]^2 - 
+   256 r^6 y3^4 \[Gamma]^2 - 64 r^4 y3^6 \[Gamma]^2 + 
+   16 r^2 y3^8 \[Gamma]^2, -(16384 r^12 - 8192 r^11 y3 - 3072 r^10 y3^2 + 
+    2048 r^9 y3^3 - 1280 r^8 y3^4 + 512 r^7 y3^5 + 192 r^6 y3^6 - 
+    128 r^5 y3^7 + 16 r^4 y3^8 - 8192 r^10 y3 \[Gamma] + 
+    2048 r^9 y3^2 \[Gamma] + 2048 r^8 y3^3 \[Gamma] - 512 r^7 y3^4 \[Gamma] + 
+    512 r^6 y3^5 \[Gamma] - 128 r^5 y3^6 \[Gamma] - 128 r^4 y3^7 \[Gamma] + 
+    32 r^3 y3^8 \[Gamma] + 1024 r^8 y3^2 \[Gamma]^2 - 
+    256 r^6 y3^4 \[Gamma]^2 - 64 r^4 y3^6 \[Gamma]^2 + 
+    16 r^2 y3^8 \[Gamma]^2)]
+
+In[8]:= Collect[5120 r^10 y3^2 - 4352 r^9 y3^3 + 1552 r^8 y3^4 - 512 r^7 y3^5 - 
+   136 r^6 y3^6 + 144 r^5 y3^7 - 15 r^4 y3^8 + 2048 r^9 y3^2 \[Gamma] - 
+   768 r^8 y3^3 \[Gamma] + 64 r^7 y3^4 \[Gamma] - 384 r^6 y3^5 \[Gamma] - 
+   32 r^5 y3^6 \[Gamma] + 144 r^4 y3^7 \[Gamma] - 28 r^3 y3^8 \[Gamma] + 
+   1024 r^8 y3^2 \[Gamma]^2 - 768 r^7 y3^3 \[Gamma]^2 - 
+   416 r^6 y3^4 \[Gamma]^2 + 256 r^5 y3^5 \[Gamma]^2 + 
+   80 r^4 y3^6 \[Gamma]^2 - 16 r^3 y3^7 \[Gamma]^2 - 10 r^2 y3^8 \[Gamma]^2 - 
+   256 r^6 y3^3 \[Gamma]^3 + 64 r^5 y3^4 \[Gamma]^3 + 
+   128 r^4 y3^5 \[Gamma]^3 - 32 r^3 y3^6 \[Gamma]^3 - 
+   16 r^2 y3^7 \[Gamma]^3 + 4 r y3^8 \[Gamma]^3 + 16 r^4 y3^4 \[Gamma]^4 - 
+   8 r^2 y3^6 \[Gamma]^4 + y3^8 \[Gamma]^4 == 0, y3]
+
+In[13]:= Clear[r, \[Gamma], y3]
+y3^2 (5120 r^10 + 2048 r^9 \[Gamma] + 1024 r^8 \[Gamma]^2) + 
+  y3^7 (144 r^5 + 144 r^4 \[Gamma] - 16 r^3 \[Gamma]^2 - 16 r^2 \[Gamma]^3) + 
+  y3^5 (-512 r^7 - 384 r^6 \[Gamma] + 256 r^5 \[Gamma]^2 + 
+     128 r^4 \[Gamma]^3) + 
+  y3^3 (-4352 r^9 - 768 r^8 \[Gamma] - 768 r^7 \[Gamma]^2 - 
+     256 r^6 \[Gamma]^3) + 
+  y3^8 (-15 r^4 - 28 r^3 \[Gamma] - 10 r^2 \[Gamma]^2 + 
+     4 r \[Gamma]^3 + \[Gamma]^4) + 
+  y3^6 (-136 r^6 - 32 r^5 \[Gamma] + 80 r^4 \[Gamma]^2 - 32 r^3 \[Gamma]^3 - 
+     8 r^2 \[Gamma]^4) + 
+  y3^4 (1552 r^8 + 64 r^7 \[Gamma] - 416 r^6 \[Gamma]^2 + 64 r^5 \[Gamma]^3 + 
+     16 r^4 \[Gamma]^4) /. \[Gamma] -> r
+
+In[22]:= -(8192 r^10 y3^2 - 6144 r^9 y3^3 + 1280 r^8 y3^4 - 512 r^7 y3^5 - 
+   128 r^6 y3^6 + 256 r^5 y3^7 - 48 r^4 y3^8)
+
+In[15]:= Clear[r, y3]
+r = 1;
+NSolve[8192 r^10 y3^2 - 6144 r^9 y3^3 + 1280 r^8 y3^4 - 512 r^7 y3^5 - 
+   128 r^6 y3^6 + 256 r^5 y3^7 - 48 r^4 y3^8 == 0, y3]
+
+In[20]:= Clear[r, y3]
+(*r=1;*)
+Solve[8192 r^10 y3^2 - 6144 r^9 y3^3 + 1280 r^8 y3^4 - 512 r^7 y3^5 - 
+   128 r^6 y3^6 + 256 r^5 y3^7 - 48 r^4 y3^8 == 
+  0, y3](*The solutions are not easily expressible*)
+
+Rewrite the equation
+
+In[49]:= Clear[r, y3]
+Factor[8192 r^10 y3^2 - 6144 r^9 y3^3 + 1280 r^8 y3^4 - 512 r^7 y3^5 - 
+  128 r^6 y3^6 + 256 r^5 y3^7 - 48 r^4 y3^8]
+
+In[51]:= Cancel[(8192 r^10 y3^2 - 6144 r^9 y3^3 + 1280 r^8 y3^4 - 512 r^7 y3^5 - 
+  128 r^6 y3^6 + 256 r^5 y3^7 - 48 r^4 y3^8)/(-16*r^4*y3^2)]
+
+In[52]:= Factor[-512 r^6 + 384 r^5 y3 - 80 r^4 y3^2 + 32 r^3 y3^3 + 8 r^2 y3^4 - 
+  16 r y3^5 + 3 y3^6]
+
+In[58]:= Clear[r, y3]
+(*r=1*)
+Solve[128 r^4 + 32 r^3 y3 + 20 r^2 y3^2 + 4 r y3^3 - 3 y3^4 == 0, y3]
+
+In[60]:= r = 1
+N[r/3 + 1/3 Sqrt[
+   11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+    1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)] + 
+  1/2 Sqrt[(88 r^2)/9 + (1148 r^4)/(
+    9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)) - 
+    4/9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3) + (416 r^3)/(
+    9 Sqrt[11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+      1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)])]]
+
+This is the solution, rewrite it
+
+Clear[r]
+r/3 + 1/3 Sqrt[
+  11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+   1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)] + 
+ 1/2 Sqrt[(88 r^2)/9 + (1148 r^4)/(
+   9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)) - 
+   4/9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3) + (416 r^3)/(
+   9 Sqrt[11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(
+     1/3) + (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)])]
+
+r/3 + 1/3 Sqrt[
+  11 r^2 - (287 r^4)/(-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3) + 
+   r^2*(-4049 - 192 Sqrt[1086] )^(1/3)] + 
+ 1/2 Sqrt[(88 r^2)/9 + (1148 r^4)/(
+   9 (-4049 r^6 - 192 Sqrt[1086] r^6)^(1/3)) - 
+   4/9 *r^2*(-4049 - 192 Sqrt[1086] )^(1/3) + (416 r^3)/(
+   9 Sqrt[11 r^2 - (287 r^4)/(r^2 (-4049 - 192 Sqrt[1086] )^(1/3)) + 
+     r^2*(-4049 - 192 Sqrt[1086])^(1/3)])]
+
+r/3 + r/3 Sqrt[
+  11 - (287 r^2)/(
+   r^2 (-4049 - 192 Sqrt[1086])^(1/3)) + (-4049 - 192 Sqrt[1086] )^(1/3)] + 
+ r/2 Sqrt[88 /9 + (1148 r^2)/(9 r^2 (-4049 - 192 Sqrt[1086] )^(1/3)) - 
+   4/9 *(-4049 - 192 Sqrt[1086] )^(1/3) + (416 r)/(
+   9 *r*Sqrt[
+    11 - (287 r^2)/(
+     r^2 (-4049 - 192 Sqrt[1086] )^(1/3)) + (-4049 - 192 Sqrt[1086])^(1/3)])]
+
+r/3 + r/3 Sqrt[
+  11 + 287 /(4049 + 192 Sqrt[1086] )^(1/3) - (4049 + 192 Sqrt[1086] )^(1/3)] +
+  r/2 Sqrt[88 /9 - 1148 /(9 (4049 + 192 Sqrt[1086] )^(1/3)) + 
+   4/9 *(4049 + 192 Sqrt[1086] )^(1/3) + 416 /(
+   9 *Sqrt[11 + 287 /(4049 + 192 Sqrt[1086] )^(
+     1/3) - (4049 + 192 Sqrt[1086])^(1/3)])]
+
+Can the expression directly above be improved to a useable expression? Or the one directly below?(1/11/21)
+
+\[Alpha] = (4049 + 192 Sqrt[1086] )^(1/3)
+r/3 + r/3 Sqrt[11 + 287 /\[Alpha] - \[Alpha]] + 
+ r/2 Sqrt[88 /9 - 1148 /(9 \[Alpha]) + 4/9 *\[Alpha] + 416 /(
+   9 *Sqrt[11 + 287 /\[Alpha] - \[Alpha]])]
+
+In[75]:= \[Alpha] = (4049 + 192 Sqrt[1086] )^(1/3)
+r = 1
+N[r/3 + r/3 Sqrt[11 + 287 /\[Alpha] - \[Alpha]] + 
+  r/6 Sqrt[88 - 1148 /\[Alpha] + 4 *\[Alpha] + 416 /Sqrt[
+    11 + 287 /\[Alpha] - \[Alpha]]]]
+
+In[78]:= \[Alpha] = (4049 + 192 Sqrt[1086] )^(1/3)
+r = 1
+N[r/3 (1 + Sqrt[11 + 287 /\[Alpha] - \[Alpha]] + 
+    1/2 Sqrt[88 - 1148 /\[Alpha] + 4 *\[Alpha] + 416 /Sqrt[
+      11 + 287 /\[Alpha] - \[Alpha]]])]
+
+In[81]:= \[Alpha] = (4049 + 192 Sqrt[1086] )^(1/3)
+\[Beta] = Sqrt[11 + 287 /\[Alpha] - \[Alpha]]
+r = 1
+N[r/3 (1 + \[Beta] + 
+    1/2 Sqrt[88 - 1148 /\[Alpha] + 4 *\[Alpha] + 416 /\[Beta]])]
+
+Tangent Critical F4, case (viii) , Subscript[\[ScriptL], def13R] supports C4 on LHS, Subscript[\[ScriptL], def23R] supports C4 on left
+
+
+(*taken from: CriticalFamiliesSize4Overlapping *)(*Compare with Case A(i)*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of center of disk Subscript[C, 1] and \
+Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+\[ScriptL]def13RSlope = 4/3;(*slope of line lsep for C2/C3*)
+\[ScriptL]def13Rint = -r/3;
+t = (2/3) r + \[Delta]; (*t must be in the bound \[Delta]+2r < t < 3\[Delta] \
+*)(*center x-  coordinate for C3*)
+\[Gamma] = 
+  r;(*\[Gamma] is x-coordinate of center of disk Subscript[C, 3]*)(*We use \
+the absolute value for \[Gamma]*)
+y3 = 8/3 r;
+Subscript[x, 4] = 
+  3 r;(*Subscript[x, 4] is x-coordinate of center of disk Subscript[C, \
+4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+y4 = 2 r
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,y}*)];
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{-r - r, r}, {\[Gamma] + 2 r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{-r - r, -r}, {\[Gamma] + 2 r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -(3 r)}, {0, (3 r)}}]}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r/2,
+      r/3}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+2r+b/2,-2r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def13R]*)
+    Line[{{-2 r, \[ScriptL]def13RSlope*(-2 r) + \[ScriptL]def13Rint}, \
+{Subscript[x, 4] + r/
+        4, \[ScriptL]def13RSlope*(Subscript[x, 4] + r/
+           4) + \[ScriptL]def13Rint}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep23R], vertical*)
+    Line[{{\[Gamma] + r, -3 r}, {\[Gamma] + r, 3 r}}] }];
+
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def13R], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> 
+      "Courier New"], {-2 r, \[ScriptL]def13RSlope*(-2 r) + \
+\[ScriptL]def13Rint}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def23R], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Gamma] + r, -3 r}, {1, 0}]];
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], y3}], Point[{Subscript[x, 4], y4}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], y3}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], y4}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], y3}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4], 
+     y4}, {1, 0}]];
+g22 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 1], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, r}, {1, 0}]];
+g23 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 2], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, -r}, {1, 0}]];
+
+(* Label: CriticalFamiliesSize4Tangentviii *)(*see handwritten pages for this \
+labeling scheme *)
+
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21, g22, g23]
+
+Tangent Critical F4, page 6 1/2 initial assessment, first case (ix), x4<0, Subscript[\[ScriptL], sep13] supports C4 on RHS, Subscript[\[ScriptL], sep23] supports C4 on right
+
+
+(*taken from: CriticalFamiliesSize4Overlapping *)(*Compare with Case A(i)*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of center of disk Subscript[C, 1] and \
+Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+\[ScriptL]sep13Slope = (y3^2 - 4 r^2)/(
+  4 r*y3);(*slope of line lsep for C2/C3*)
+\[ScriptL]sep13int = y3/2;
+t = (2/3) r + \[Delta]; (*t must be in the bound \[Delta]+2r < t < 3\[Delta] \
+*)(*center x-  coordinate for C3*)
+\[Gamma] = 
+  r;(*\[Gamma] is x-coordinate of center of disk Subscript[C, 3]*)(*We use \
+the absolute value for \[Gamma]*)
+y3 = 2.658967081916994`;
+Subscript[x, 4] = (r (4 r^2 - 8 r y3 + 3 y3^2))/(
+  4 r^2 - y3^2);(*Subscript[x, 4] is x-coordinate of center of disk \
+Subscript[C, 4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+\[ScriptL]sep23Slope = -Sqrt[y3^2 - 4 r^2]/(2 r);
+\[ScriptL]sep23int = \[ScriptL]sep23Slope*(-r) + y3/2;
+y4 = 2 r
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,y}*)];
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{-r - r, r}, {\[Gamma] + 2 r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{-r - r, -r}, {\[Gamma] + 2 r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -(2 r)}, {0, (3 r)}}]}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r/2,
+      0}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+2r+b/2,-2r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep13]*)
+    Line[{{Subscript[x, 4] - r/
+        2, \[ScriptL]sep13Slope*(Subscript[x, 4] - r/
+           2) + \[ScriptL]sep13int}, {2 r, \[ScriptL]sep13Slope*(2 r) + \
+\[ScriptL]sep13int}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep23]*)
+    Line[{{Subscript[x, 4] - r/
+        4, \[ScriptL]sep23Slope*(Subscript[x, 4] - r/
+           4) + \[ScriptL]sep23int}, {2 r, \[ScriptL]sep23Slope*(2 r) + \
+\[ScriptL]sep23int}}] }];
+
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep13], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] - r/
+      2, \[ScriptL]sep13Slope*(Subscript[x, 4] - r/
+         2) + \[ScriptL]sep13int}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep23], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {Subscript[x, 4] - r/
+      4, \[ScriptL]sep23Slope*(Subscript[x, 4] - r/
+         4) + \[ScriptL]sep23int}, {1, 0}]];
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], y3}], Point[{Subscript[x, 4], y4}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], y3}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], y4}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], y3}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4], 
+     y4}, {1, 0}]];
+g22 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 1], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, r}, {1, 0}]];
+g23 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 2], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, -r}, {1, 0}]];
+
+(* Label: CriticalFamiliesSize4Tangentix *)(*see handwritten pages for this \
+labeling scheme *)
+
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21, g22, g23]
+
+x4 = (4*r*y3)/(
+  y3^2 - 4 r^2)*(-Sqrt[(y3^2 - 4 r^2)^2 + 16 r^2*y3^2]/(4 y3) + 2 r - y3/2)
+
+In[1]:= Simplify[(4*r*y3)/(
+  y3^2 - 4 r^2)*(-Sqrt[(y3^2 - 4 r^2)^2 + 16 r^2*y3^2]/(4 y3) + 2 r - y3/2)]
+
+In[2]:= PowerExpand[(r (-8 r y3 + 2 y3^2 + Sqrt[(4 r^2 + y3^2)^2]))/(4 r^2 - y3^2)]
+
+Calculating y3
+
+the equation relates two expressions for slope of ellsep23
+
+In[110]:= Clear[r, y3]
+Simplify[(2 r)/(
+  r - (r (4 r^2 - 8 r y3 + 3 y3^2))/(4 r^2 - y3^2)) == -(Sqrt[y3^2 - 4 r^2]/(
+   2 r))]
+
+In[116]:= AddSides[1 + (2 r)/y3 + Sqrt[-4 r^2 + y3^2]/r == 0, -(Sqrt[-4 r^2 + y3^2]/r)]
+
+In[117]:= Expand[(1 + (2 r)/y3)^2 == (-(Sqrt[-4 r^2 + y3^2]/r))^2]
+
+In[120]:= ExpandAll[MultiplySides[1 + (4 r^2)/y3^2 + (4 r)/y3 == -4 + y3^2/r^2, 
+  r^2*y3^2]]
+
+In[121]:= AddSides[4 r^4 + 4 r^3 y3 + r^2 y3^2 == -4 r^2 y3^2 + 
+   y3^4, -(-4 r^2 y3^2 + y3^4)]
+
+In[122]:= Clear[r, y3]
+r = 1
+NSolve[4 r^4 + 4 r^3 y3 + 5 r^2 y3^2 - y3^4 == 0, y3]
+
+Tangent Critical F4, p.6 1/2 of Initial Assessment second case (x) , Subscript[\[ScriptL], sep13] supports C4 on LHS, Subscript[\[ScriptL], def23R] supports C4 on left
+
+In[618]:= 
+(*taken from: CriticalFamiliesSize4Overlapping *)(*Compare with Case A(i)*)
+\[Delta] = r;
+ (*magnitude of x-coordinate of center of disk Subscript[C, 1] and \
+Subscript[C, 2]*)
+r = 1; (*common radius of disk Subscript[C, 1] and Subscript[C, 2]*)
+\[CurlyEpsilon] = \[Delta]/5;
+\[ScriptL]sep13Slope = (y3^2 - 4 r^2)/(
+  4 r*y3);(*slope of line lsep for C2/C3*)
+\[ScriptL]sep13int = y3/2;
+t = (2/3) r + \[Delta]; (*t must be in the bound \[Delta]+2r < t < 3\[Delta] \
+*)(*center x-  coordinate for C3*)
+\[Gamma] = 
+  r;(*\[Gamma] is x-coordinate of center of disk Subscript[C, 3]*)(*We use \
+the absolute value for \[Gamma]*)
+y3 = r (1 + Sqrt[5]);
+Subscript[x, 4] = 
+  3 r;(*Subscript[x, 4] is x-coordinate of center of disk Subscript[C, \
+4]*)(*We are not using the absolute value for Subscript[x, 4]*)
+y4 = 2 r
+b = r/(2 \[Delta]);(*a small buffer term*)
+ycoordcirclab = -(r/2);
+labelfontsize = 40;
+centerlabelfontsize = 24;
+g1 = Graphics[{(*Disk Subscript[C, 1]*)
+    Circle[{-\[Delta], 0}, r],(*Disk Subscript[C, 2]*)
+    Circle[{\[Delta], 0}, r](*,(*Disk Subscript[C, 3]*)Circle[{t,0},r]*)}(*,
+   Axes\[Rule]True,Ticks\[Rule]None,AxesLabel\[Rule]{x,y}*)];
+g2 = Graphics[{Black,(*horizontal line Subscript[\[ScriptL], 1]*)
+    Line[{{-r - r, r}, {\[Gamma] + 2 r, r}}], 
+    Black,(*horizontal line Subscript[\[ScriptL], 2]*)
+    Line[{{-r - r, -r}, {\[Gamma] + 2 r, -r}}], 
+    Black,(*support line Subscript[\[ScriptL], v], vertical*)
+    Line[{{0, -(2 r)}, {0, (4 r)}}]}];
+g3 = Graphics[Text[
+    StyleForm[Subscript[C, 1], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {-\[Delta] - r - r/2,
+      0}, {1, 0}]];
+(*g4=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier \
+New"],{\[Delta]+b/2,2ycoordcirclab-b/2},{1,0}]];*)
+g7 = Graphics[Text[
+    StyleForm[Subscript[C, 2], FontSize -> labelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Delta] + r + r + r/2, 0}, {1, 0}]];
+(*g9=Graphics[Text[
+StyleForm[Subscript[C, 4],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{Subscript[x, \
+4]+2r+b/2,-2r},{1,0}]];*)
+g12 = Graphics[{Black,(* support line Subscript[\[ScriptL], def13R]*)
+    Line[{{-2 r, \[ScriptL]sep13Slope*(-2 r) + \[ScriptL]sep13int}, \
+{Subscript[x, 4] + r/
+        4, \[ScriptL]sep13Slope*(Subscript[x, 4] + r/
+           4) + \[ScriptL]sep13int}}] }];
+g13 = Graphics[{Black,(* support line Subscript[\[ScriptL], sep23R], vertical*)
+    Line[{{\[Gamma] + r, -2 r}, {\[Gamma] + r, 4 r}}] }];
+
+(*g14=Graphics[Text[
+Style[Subscript[m, 1],FontSize ->centerlabelfontsize,FontWeight \
+->"Thin",FontFamily->"Courier New"],{-2\[Delta],3r},{1,0}]];*)
+g15 = Graphics[Text[
+    Style[Subscript[\[ScriptL], sep13], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> 
+      "Courier New"], {-2 r, \[ScriptL]sep13Slope*(-2 r) + \
+\[ScriptL]sep13int}, {1, 0}]];
+g16 = Graphics[Text[
+    Style[Subscript[\[ScriptL], def23R], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", 
+     FontFamily -> "Courier New"], {\[Gamma] + r, -2 r}, {1, 0}]];
+g17 = Graphics[{Point[{-\[Delta], -0}], Point[{\[Delta], 0}],(*Point[{t,0}],*)
+    Point[{\[Gamma], y3}], Point[{Subscript[x, 4], y4}], PointSize[0.05]}];
+g18 = Graphics[{(*Green,*)(*Disk C3*)Circle[{\[Gamma], y3}, r],(*Disk C4 *)
+    Circle[{Subscript[x, 4], y4}, r]}];
+(*g19=Graphics[Text[
+StyleForm[Subscript[C, 2],FontSize ->labelfontsize,FontWeight \
+->"Thin",FontFamily\[Rule]"Courier New"],{r,2r+r/2},{1,0}]];*)
+g20 = Graphics[Text[
+    Style[Subscript[o, 3], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {\[Gamma], y3}, {1, 
+     0}]];
+g21 = Graphics[Text[
+    Style[Subscript[o, 4], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {Subscript[x, 4], 
+     y4}, {1, 0}]];
+g22 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 1], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, r}, {1, 0}]];
+g23 = Graphics[Text[
+    Style[Subscript[\[ScriptL], 2], FontSize -> centerlabelfontsize, 
+     FontWeight -> "Thin", FontFamily -> "Courier New"], {4 r, -r}, {1, 0}]];
+
+(* Label: CriticalFamiliesSize4Tangentx *)(*see handwritten pages for this \
+labeling scheme *)
+
+Show[g1, g2, g3,(*g4,*)(*g5,g6,*)g7(*g8*),(*g9,*)(*g10,*)(*g11,*)g12, \
+g13,(*g14,*)g15, g16, g17, g18,(*g19,*)g20, g21, g22, g23]
